@@ -23,7 +23,7 @@
 				</ul>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item">
-						<button type="button" class="btn btn-primary">Login</button>
+						<a href="<?= base_url('auth/login'); ?>" class="btn btn-primary">Login</a>
 					</li>
 				</ul>
 			</div>

@@ -18,20 +18,27 @@
 					<a href="<?= rubah_url('lihat', 'tambah'); ?>" class="btn btn-primary px-5">Tambah Baru</a>
 				</div>
 			</div>
+			<style>
+				@media (min-width: 992px) {
+					#obat {
+						min-height: 460px;
+					}
+				}
+			</style>
 			<div class="row py-5">
 				<?php foreach($obat as $obat): ?>
 				<div class="col-lg-3">
-					<div style="cursor: pointer" class="shadow p-3" data-bs-toggle="modal"
+					<div style="cursor: pointer" id="obat" class="shadow p-3" data-bs-toggle="modal"
 						data-bs-target="#detail<?= $obat['id_obat']; ?>">
-						<img src="<?= base_url('assets'); ?>/img/obat/<?= $obat['gambar']; ?>" class="card-img-top"
-							alt="obat" />
+						<img style="" src="<?= base_url('assets'); ?>/img/obat/<?= $obat['gambar']; ?>" class="card-img-top"
+							alt="obat"/>
 						<div class="card-body">
 							<h5 class="card-title"><?= $obat['nama_obat']; ?></h5>
-							<p class="card-title fw-bold">Rp. <?= number_format($obat['harga'],0,',','.'); ?></p>
+							<p class="card-title fw-bold">Rp. <?= number_format($obat['harga'],0,',','.'); ?> / Srip</p>
 							<div class="d-flex justify-content-end">
 								<a href="<?= rubah_url('lihat', 'ubah').'/'.$obat['id_obat']; ?>" class="btn btn-primary px-3 mx-2">Edit</a>
 								<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-									data-bs-target="#exampleModal">Hapus</button>
+									data-bs-target="#hapus<?= $obat['id_obat']; ?>">Hapus</button>
 							</div>
 						</div>
 					</div>
@@ -65,24 +72,15 @@
 											</div>
 											<div class="border-bottom py-3">
 												<h5>Komposisi</h5>
-												<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
-													repellat ea
-													delectus natus voluptas expedita adipisci sint iste deserunt quis!
-												</p>
+												<p><?= $obat['komposisi']; ?></p>
 											</div>
 											<div class="border-bottom py-3">
 												<h5>Dosis</h5>
-												<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
-													repellat ea
-													delectus natus voluptas expedita adipisci sint iste deserunt quis!
-												</p>
+												<p><?= $obat['dosis']; ?></p>
 											</div>
 											<div class="border-bottom py-3">
 												<h5>Efek Samping</h5>
-												<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
-													repellat ea
-													delectus natus voluptas expedita adipisci sint iste deserunt quis!
-												</p>
+												<p><?= $obat['efek_samping']; ?></p>
 											</div>
 										</div>
 									</div>
@@ -90,7 +88,21 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Hapus -->
+				<div class="modal fade" id="hapus<?= $obat['id_obat']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<input type="hidden" name="gambar" value="<?= $obat['gambar']; ?>">
+								Yakin ining menghapus obat?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+								<a href="<?= base_url('hapus/data/'."obat/"."id_obat/".$obat['id_obat'])."./assets/img/obat"; ?>" class="btn btn-danger">Hapus</a>
 							</div>
 						</div>
 					</div>
@@ -103,15 +115,3 @@
 
 
 
-<!-- Modal Hapus -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">Jadi Hapus?</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-				<button type="button" class="btn btn-primary">Ya</button>
-			</div>
-		</div>
-	</div>
-</div>

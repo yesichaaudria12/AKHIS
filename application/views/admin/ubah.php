@@ -19,7 +19,8 @@
 					</div>
 					<div class="card-body">
 						<div class="basic-form">
-						<?= form_open_multipart(current_url()); ?>
+						<?= form_open_multipart(current_url()."/"); ?>
+							<input type="hidden" name="foto_lama" value="<?= $obat['gambar']; ?>">
 							<?php $i = 0;
                             foreach ($columns as $c) : ?>
 							<div class="form-group row my-2">
@@ -36,7 +37,7 @@
 										<?= form_error($c->name, '<small class="pl-3 text-danger">', '</small>'); ?>
 									<?php elseif(isset($input) && $input[$i] == 'textarea') :?>
 										<div class="form-floating">
-											<textarea class="form-control" name="<?= $c->name; ?>" id="<?= $c->name; ?>" style="height: 100px" placeholder="Masukan <?= str_replace("_", " ", $c->name); ?>" <?= isset($add_atribut) ? $add_atribut[$i] : ""; ?> value="<?= $obat[$c->name] ? $obat[$c->name] : set_value($c->name); ?>"></textarea>
+											<textarea class="form-control" name="<?= $c->name; ?>" id="<?= $c->name; ?>" style="height: 100px" placeholder="Masukan <?= str_replace("_", " ", $c->name); ?>" <?= isset($add_atribut) ? $add_atribut[$i] : ""; ?> value="<?= $obat[$c->name] ? $obat[$c->name] : set_value($c->name); ?>"><?= $obat[$c->name] ? $obat[$c->name] : set_value($c->name); ?></textarea>
 											<label for="<?= $c->name; ?>"><?= str_replace("_", " ", $c->name); ?></label>
 											<?= form_error($c->name, '<small class="pl-3 text-danger">', '</small>'); ?>
 										</div>
@@ -55,7 +56,7 @@
                             endforeach; ?>
 							<div class="row text-left justify-content-end">
 								<div class="col-lg-9 my-2 pr-4 text-right">
-									<button type="submit" class="btn btn-rounded btn-success px-5">Tambah</button>
+									<button type="submit" class="btn btn-rounded btn-success px-5">Edit</button>
 								</div>
 							</div>
 							</form>

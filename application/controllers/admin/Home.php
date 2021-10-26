@@ -5,6 +5,7 @@ class Home extends CI_Controller {
     public function __construct() {
 		parent::__construct();
         cek_status_login();
+		$this->session->set_userdata('kembali', current_url());
     }
 	public function index()
 	{

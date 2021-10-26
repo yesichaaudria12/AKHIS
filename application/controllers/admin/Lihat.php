@@ -27,7 +27,7 @@ class Lihat extends CI_Controller {
 		$this->load->view('admin/template/head', $data);
 		$this->load->view('admin/template/header');
 		$this->load->view('admin/template/sidebar');
-		$this->load->view('admin/lihat');
+		$this->load->view('admin/obat');
 		$this->load->view('admin/template/footer');
 	}
 }

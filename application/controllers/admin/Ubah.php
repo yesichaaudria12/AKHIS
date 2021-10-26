@@ -9,9 +9,11 @@ class Ubah extends CI_Controller {
         $fields = $this->Model_read->ambilfield('obat');
         $data['columns'] = array_slice($fields,1, 8);
         foreach ($data['columns'] as $column) {
-            $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
-                'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
-            ]);
+            if ($column->name != 'gambar' AND $column->name != 'keterangan'){
+                $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
+                    'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                ]);
+            }
         }
         if ($this->form_validation->run() == false) {
             $data['type'] = ['text', 'text', 'text', 'text', 'text','text','text','file'];
@@ -28,7 +30,7 @@ class Ubah extends CI_Controller {
             $this->load->view('admin/ubah');
             $this->load->view('admin/template/footer');
         }else{
-            $this->Model_update->obat();
+            $this->Model_update->obat($id);
         }
     }
 }

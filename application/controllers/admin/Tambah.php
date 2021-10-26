@@ -6,9 +6,16 @@ class Tambah extends CI_Controller {
         parent::__construct();
     }
     public function dokter(){
-        if (!$_POST){
-            $fields = $this->Model_read->ambilfield('dokter');
-            $data['columns'] = array_slice($fields,1, 4);
+        $fields = $this->Model_read->ambilfield('dokter');
+        $data['columns'] = array_slice($fields,1, 4);
+        foreach ($data['columns'] as $column) {
+            if ($column->name != 'foto'){
+                $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
+                    'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                ]);
+            }
+        }
+        if ($this->form_validation->run() == false){
             $data['type'] = ['file', 'text', 'text', 'email'];
             $data['input'] = ['', '', 'options','',''];
             $data['options'] = jenis_kelamin();
@@ -29,9 +36,11 @@ class Tambah extends CI_Controller {
         $fields = $this->Model_read->ambilfield('obat');
         $data['columns'] = array_slice($fields,1, 8);
         foreach ($data['columns'] as $column) {
-            $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
-                'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
-            ]);
+            if ($column->name != 'keterangan' AND $column->name != 'gambar'){
+                $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
+                    'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                ]);
+            }
         }
         if ($this->form_validation->run() == false) {
             $data['type'] = ['text', 'text', 'text', 'text', 'text','text','text','file'];

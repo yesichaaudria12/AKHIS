@@ -13,7 +13,7 @@
 		<div class="content-body">
 			<div class="container-fluid mt-3">
 				<div class="my-3">
-						<?= $this->session->flashdata('message'); ?>
+					<?= $this->session->flashdata('message'); ?>
 				</div>
 				<a href="<?= $kembali; ?>" class="btn btn-dark mb-3"><i class="fas fa-arrow-left"></i> Kembali</a>
 				<div class="card">
@@ -31,8 +31,7 @@
 								<div class="col-lg-9">
 									<?php if (isset($input) && $input[$i] == 'options') : ?>
 									<select class="form-control input-rounded" id="sel1" name="<?= $c->name; ?>">
-										<option value="<?= set_value($c->name); ?>">Silahkan Pilih
-											<?= ucwords($c->name); ?></option>
+										<option value="<?= set_value($c->name); ?>"><?= set_value($c->name) ? set_value($c->name) :"Silahkan Pilih ". ucwords(str_replace('_',' ',$c->name)); ?></option>
 										<?php foreach($options as $o): ?>
 										<option value="<?= $o[$value]; ?>"><?= $o[$list]; ?></option>
 										<?php endforeach; ?>
@@ -40,7 +39,7 @@
 										<?= form_error($c->name, '<small class="pl-3 text-danger">', '</small>'); ?>
 									<?php elseif(isset($input) && $input[$i] == 'textarea') :?>
 										<div class="form-floating">
-											<textarea class="form-control" name="<?= $c->name; ?>" id="<?= $c->name; ?>" style="height: 100px" placeholder="Masukan <?= str_replace("_", " ", $c->name); ?>" <?= isset($add_atribut) ? $add_atribut[$i] : ""; ?> value="<?= set_value($c->name); ?>"></textarea>
+											<textarea class="form-control" name="<?= $c->name; ?>" id="<?= $c->name; ?>" style="height: 100px" placeholder="Masukan <?= str_replace("_", " ", $c->name); ?>" <?= isset($add_atribut) ? $add_atribut[$i] : ""; ?> value="<?= set_value($c->name); ?>"><?= set_value($c->name); ?></textarea>
 											<label for="<?= $c->name; ?>"><?= str_replace("_", " ", $c->name); ?></label>
 											<?= form_error($c->name, '<small class="pl-3 text-danger">', '</small>'); ?>
 										</div>

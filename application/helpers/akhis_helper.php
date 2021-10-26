@@ -27,19 +27,17 @@ function rubah_url($sebelum, $sesudah)
 
 function upload_foto($name, $path_penyimpanan){
     $ci = get_instance();
-    $foto = $_FILES[$name]['name'];
-    if ($foto){
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['max_size']     = '5048';
-        $config['upload_path'] = $path_penyimpanan;
-        $config['file_name'] = time();
-        $ci->upload->initialize($config);
-        if ($ci->upload->do_upload($name)){
-            unlink(FCPATH . "$path_penyimpanan/" . $ci->input->post('foto_lama', TRUE));
-            return $ci->upload->data('file_name');
+    $config['allowed_types'] = 'jpg|png|jpeg';
+    $config['max_size']     = '5048';
+    $config['upload_path'] = $path_penyimpanan;
+    $config['file_name'] = time();
+    $ci->upload->initialize($config);
+    if ($ci->upload->do_upload($name)){
+        $foto_lama = $ci->input->post('foto_lama', TRUE);
+        if ($foto_lama){
+            unlink(FCPATH . "$path_penyimpanan/" . $foto_lama);
         }
-    }else{
-        return "default-".$ci->input->post('jenis_kelamin').'.png';
+        return $ci->upload->data('file_name');
     }
 }
 

@@ -15,7 +15,7 @@
 					<div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
 					Data Obat
 				</a>
-				<a class="nav-link" href="<?= base_url(); ?>">
+				<a class="nav-link" href="<?= base_url('admin/lihat/profile'); ?>">
 					<div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
 					Profile
 				</a>

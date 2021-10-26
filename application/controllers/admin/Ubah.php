@@ -28,7 +28,7 @@ class Ubah extends CI_Controller {
             $this->load->view('admin/ubah');
             $this->load->view('admin/template/footer');
         }else{
-            $this->Model_create->obat();
+            $this->Model_update->obat();
         }
     }
 }

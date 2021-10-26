@@ -35,6 +35,7 @@ function upload_foto($name, $path_penyimpanan){
         $config['file_name'] = time();
         $ci->upload->initialize($config);
         if ($ci->upload->do_upload($name)){
+            unlink(FCPATH . "$path_penyimpanan/" . $ci->input->post('foto_lama', TRUE));
             return $ci->upload->data('file_name');
         }
     }else{

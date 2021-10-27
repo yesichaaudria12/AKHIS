@@ -16,7 +16,7 @@
 <!-- Hero End -->
 
 <!-- Jual -->
-<section class="py-5" id="jual">
+<section class="py-5" id="melayani">
 	<div class="container py-5">
 		<div class="row">
 			<div class="col text-center">

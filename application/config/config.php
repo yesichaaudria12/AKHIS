@@ -64,7 +64,7 @@ $config['subclass_prefix'] = 'MY_';
 | Composer auto-loading
 |--------------------------------------------------------------------------
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = true;
 
 /*
 |--------------------------------------------------------------------------

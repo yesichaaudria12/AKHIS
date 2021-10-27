@@ -20,7 +20,10 @@ class Auth extends CI_Controller {
         ]);
         if ($this->form_validation->run() === false) {
             $data['title'] = "Login | $this->nama_web";
-            $this->load->view('auth/login', $data);
+            $this->load->view('auth/template/head', $data);
+			$this->load->view('auth/template/header');
+			$this->load->view('auth/login');
+			$this->load->view('auth/template/footer');
         } else {
             echo "berhasil";
             $this->_login();
@@ -34,16 +37,31 @@ class Auth extends CI_Controller {
 		if ($this->session->userdata('id_pasien')){
             redirect($this->session->userdata('home'));
         }
-        $this->form_validation->set_rules('email', 'email', 'required|trim', [
-            'required' => 'Email NIP wajib di isi',
+        $this->form_validation->set_rules('nama_lengkap', 'nama_lengkap', 'required|trim', [
+            'required' => 'Nama Lengkap wajib di isi',
         ]);
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]', [
+        $this->form_validation->set_rules('jenis_kelamin', 'jenis_kelamin', 'required|trim', [
+            'required' => 'Jenis kelamin wajib di isi',
+        ]);
+        $this->form_validation->set_rules('email', 'email', 'required|trim|is_unique[pasien.email]', [
+            'required' => 'Email wajib di isi',
+            'is_unique' => 'Email sudah terdaftar'
+        ]);
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|matches[password_konfirmasi]', [
             'required' => 'Password wajib di isi',
-            'min_length' => 'Password Minimal 6 Character'
+            'min_length' => 'Password Minimal 6 Character',
+            'matches' => ''
+        ]);
+        $this->form_validation->set_rules('password_konfirmasi', 'Password_konfirmasi', 'trim|required|matches[password]', [
+            'required' => 'Password konfirmasi wajib di isi',
+            'matches' => 'Password konfirmasi tidak sama!'
         ]);
         if ($this->form_validation->run() == false) {
 			$data['title'] = "Daftar | " . $this->nama_web;
+			$this->load->view('auth/template/head', $data);
+			$this->load->view('auth/template/header');
 			$this->load->view('auth/daftar');
+			$this->load->view('auth/template/footer');
         } else {
             $this->Model_auth->daftar();
         }
@@ -55,6 +73,6 @@ class Auth extends CI_Controller {
         <strong>Logout Berhasil!</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>');
-        redirect('auth/login');
+        redirect('home');
     }
 }

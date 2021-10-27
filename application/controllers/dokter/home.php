@@ -12,12 +12,12 @@ class Home extends CI_Controller {
 		$fileds = $this->db->list_fields('dokter');
 		$data['columns'] = array_slice($fileds, 1, 4);
 		$data['width'] = ['width: 10%','width: 50%','width: 5%','width: 45%'];
-		$data['dokter'] = $this->Model_read->ambilData('dokter');
+		$data['dokter'] = $this->Model_read->ambilData('pasien');
         $data['title'] = "Dashboard | Admin";
-		$this->load->view('admin/template/head', $data);
-		$this->load->view('admin/template/header');
-		$this->load->view('admin/template/sidebar');
-		$this->load->view('admin/home');
-		$this->load->view('admin/template/footer');
+		$this->load->view('dokter/template/head', $data);
+		$this->load->view('dokter/template/header');
+		$this->load->view('dokter/template/sidebar');
+		$this->load->view('dokter/v_home');
+		$this->load->view('dokter/template/footer');
 	}
 }

@@ -1,67 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
-	<link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('assets'); ?>/img/logo.ico">
-	<title><?= $title; ?></title>
-	<!-- CSS Sb-Admin -->
-	<link href="<?= base_url('assets'); ?>/css/sb-admin.css" rel="stylesheet" />
-	<link href="<?= base_url('assets'); ?>/vendor/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" />
-	<script src="<?= base_url('assets'); ?>/icon/font-awesome/js/all.min.js" crossorigin="anonymous"></script>
-</head>
-
-<body class="bg-primary">
-	<div id="layoutAuthentication">
-		<div id="layoutAuthentication_content">
-			<main>
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-lg-5">
-							<div class="card shadow-lg border-0 rounded-lg mt-5">
-								<div class="card-header">
-									<h3 class="text-center font-weight-light my-4">Login</h3>
-								</div>
-								<div class="card-body">
-									<?= $this->session->flashdata('message'); ?>
-									<?= form_open('auth/login'); ?>
-									<div class="form-floating mb-3">
-										<input class="form-control" id="inputEmail" type="email"
-											placeholder="masukan email anda" name="email"
-											value="<?= set_value('email'); ?>" />
+<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-4">
+	<div class="container-fluid">
+		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 mt-5">
+			<div class="col mx-auto">
+				<div class="card mt-5 mt-lg-0">
+					<div class="card-body">
+						<div class="border p-4 rounded">
+							<div class="text-center">
+								<?= $this->session->flashdata('message'); ?>
+								<h3 class="text-success">Login</h3>
+								<p>belum punya akun? <a href="<?= base_url('auth/daftar'); ?>">Daftar di sini</a>
+								</p>
+							</div>
+							<div class="d-grid">
+								<a class="btn my-4 shadow-sm btn-white" href="javascript:;"> <span
+										class="d-flex justify-content-center align-items-center">
+										<img class="me-2" src="<?= base_url('assets'); ?>/akhis/images/icons/search.svg"
+											width="16" alt="Image Description">
+										<span>Login Dengan Google</span>
+									</span>
+								</a>
+							</div>
+							<div class="login-separater text-center mb-4"> <span>atau dengan email</span>
+								<hr />
+							</div>
+							<div class="form-body">
+								<form action="<?= base_url('auth/login'); ?>" method="POST" class="row g-3">
+									<div class="col-12">
+										<label for="email" class="form-label">Email Anda</label>
+										<input type="email" class="form-control" id="email " placeholder="Masukan Email"
+											name="email" value="<?= set_value('email'); ?>">
 										<?= form_error('email', '<small class="text-danger">', '</small>'); ?>
-										<label for="inputEmail">Email</label>
 									</div>
-									<div class="form-floating mb-3">
-										<input class="form-control" id="inputPassword" type="password"
-											placeholder="masukan password anda" name="password" />
+									<div class="col-12">
+										<label for="password" class="form-label">
+											Password</label>
+										<div class="input-group" id="show_hide_password">
+											<input type="password" class="form-control border-end-0" id="password"
+												name="password" placeholder="Masukan Password"> <a href="javascript:;"
+												class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+										</div>
 										<?= form_error('password', '<small class="text-danger">', '</small>'); ?>
-										<label for="inputPassword">Password</label>
 									</div>
-									<div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-										<a class="small" href="password.html">Forgot Password?</a>
-										<button type="submit" class="btn btn-primary">Login</button>
+									<div class="col-md-6">
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+												checked>
+											<label class="form-check-label" for="flexSwitchCheckChecked">Remember
+												Me</label>
+										</div>
 									</div>
-									</form>
-								</div>
-								<div class="card-footer text-center py-3">
-									<div class="small"><a href="<?= base_url('auth/daftar'); ?>">Belum punya akun?
-											Daftar</a></div>
-								</div>
+									<div class="col-md-6 text-end"> <a href="authentication-forgot-password.html">Lupa
+											Password?</a>
+									</div>
+									<div class="col-12">
+										<div class="d-grid">
+											<button type="submit" class="btn btn-success"><i
+													class="bx bxs-lock-open"></i>Login</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-			</main>
+			</div>
 		</div>
+		<!--end row-->
 	</div>
-	<script src="<?= base_url('assets'); ?>/vendor/bootstrap-5/js/bootstrap.bundle.js" crossorigin="anonymous"></script>
-	<!-- JS Sb-Admin -->
-	<script src="<?= base_url('assets'); ?>/js/sb-admin.js"></script>
-</body>
-
-</html>
+</div>

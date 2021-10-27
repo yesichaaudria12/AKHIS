@@ -53,4 +53,28 @@ function jenis_kelamin(){
         ]
         ];
 }
+
+function ambil_nama_byID($id, $table){
+    $ci = get_instance();
+    $data = $ci->db->get_where($table, ["id_$table" => $id])->row_array();
+    return $data['nama_lengkap'];
+}
+function ambil_foto_byID($id, $table){
+    $ci = get_instance();
+    $data = $ci->db->get_where($table, ["id_$table" => $id])->row_array();
+    return $data['foto'];
+}
+function status_online(){
+    
+}
+
+function chat_terbaru($id_LC = null){
+    $ci = get_instance();
+    $ci->db->where('id_LC', $id_LC);
+    $ci->db->order_by('id','DESC');
+    $ci->db->limit(1);
+    $data =$ci->db->get('chat')->row_array();
+    return $data['pesan'];
+}
+
 ?>

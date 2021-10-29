@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+ini_set('date.timezone', 'Asia/Jakarta');
 
 class Model_read extends CI_Model
 {
@@ -21,8 +22,29 @@ class Model_read extends CI_Model
         $this->db->limit(1);
         return $this->db->get('chat')->result_array();
     }
-    public function live_chat(){
+    public function live_chat_pasien(){
         $id_user = $this->session->userdata('id');
         return $this->db->get_where('live_chat', ['id_pasien' => $id_user])->result_array();
+    }
+    public function live_chat_dokter(){
+        $id_user = $this->session->userdata('id');
+        return $this->db->get_where('live_chat', ['id_dokter' => $id_user])->result_array();
+    }
+    public function pilih_live_chat($id_pasien = null, $id_dokter = null){
+        return $this->db->get_where('live_chat', ['id_pasien' => $id_pasien, 'id_dokter' => $id_dokter])->row_array();
+    }
+    public function belum_dibaca(){
+        $id_user = $this->session->userdata('id');
+        $this->db->where('kepada', $id_user);
+        $this->db->where('status', 'terkirim');
+        return $this->db->count_all_results('chat');
+    }
+    public function buat_panggilan($id, $role){
+        $panggilan = "TN";
+        $data = $this->db->get_where($role, ["id_$role" => $id])->row_array();
+        if ($data['jenis_kelamin'] == 'P'){
+            $panggilan = "NY";
+        }
+        return $panggilan;
     }
 }

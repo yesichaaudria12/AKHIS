@@ -10,7 +10,7 @@ function cek_status_login()
         $controller = $ci->uri->segment(1);
         $akses = $ci->db->get_where('hak_akses', ['role' => $role, 'controller_access' => $controller])->row_array();
         if ($akses < 1) {
-            redirect($ci->session->userdata($role.'/home'));
+            redirect("$role/home");
         }
     }
 }
@@ -64,9 +64,6 @@ function ambil_foto_byID($id, $table){
     $data = $ci->db->get_where($table, ["id_$table" => $id])->row_array();
     return $data['foto'];
 }
-function status_online(){
-    
-}
 
 function chat_terbaru($id_LC = null){
     $ci = get_instance();
@@ -74,7 +71,79 @@ function chat_terbaru($id_LC = null){
     $ci->db->order_by('id','DESC');
     $ci->db->limit(1);
     $data =$ci->db->get('chat')->row_array();
-    return $data['pesan'];
+    return $data;
+}
+function chat_belum_dibaca($id_LC = null){
+    $ci = get_instance();
+    $id_user = $ci->session->userdata('id');
+    $ci->db->where('kepada', $id_user);
+    $ci->db->where('id_LC', $id_LC);
+    $ci->db->where('status', 'terkirim');
+    $data = $ci->db->count_all_results('chat');
+    if ($data) {
+        return $data;
+    }
 }
 
+function online($id, $role){
+    $ci = get_instance();
+    $ci->db->set('status_online', 'online');
+    $ci->db->where("id_$role", $id);
+    $ci->db->update($role);
+}
+function offline($id, $role){
+    $ci = get_instance();
+    $ci->db->set('status_online', 'offline');
+    $ci->db->where("id_$role", $id);
+    $ci->db->update($role);
+}
+function status_online($id, $role){
+    $ci = get_instance();
+    $ci->db->select('status_online');
+    $data = $ci->db->get_where($role, ["id_$role" => $id])->row_array();
+    return $data['status_online'];
+}
+
+function detail_resep($id_resep){
+    $ci = get_instance();
+    return $ci->db->get_where('v_detail_resep',['id_resep' => $id_resep])->result_array();
+}
+function terakhir_konsul($id_pasien){
+    $ci = get_instance();
+    $ci->db->order_by('id', 'DESC');
+    $ci->db->limit(1);
+    $data = $ci->db->get_where('chat', ['dari' => $id_pasien])->row_array();
+    if ($data){
+        return $data['tanggal_dikirim'];
+    }
+}
+function umur($tanggal_lahir){
+    if ($tanggal_lahir != '0000-00-00'){
+        $umur = new DateTime($tanggal_lahir);
+        $sekarang = new DateTime("today");
+        if ($umur < $sekarang){
+            return $sekarang->diff($umur)->y;
+        }else{
+            
+        }
+    }
+}
+
+function get_invoice($id_resep){
+    $ci = get_instance();
+    $data = $ci->db->get_where('pesanan', ['id_resep' => $id_resep])->row_array();
+    return $data['invoice'];
+}
+
+function cek_bayar($id_resep){
+    $ci = get_instance();
+    $data = $ci->db->get_where('pesanan', ['id_resep' => $id_resep])->row_array();
+    return $data['status'];
+}
+function lihat_bukti($id_resep){
+    $ci = get_instance();
+    $invoice = get_invoice($id_resep);
+    $data = $ci->db->get_where('pembayaran', ['invoice' => $invoice])->row_array();
+    return $data['bukti_bayar'];
+}
 ?>

@@ -1,11 +1,13 @@
 <div class="sidebar-wrapper" data-simplebar="true">
 	<div class="sidebar-header">
-		<div>
-			<img src="<?= base_url('assets'); ?>/img/logo.jpg" class="logo-icon" alt="logo icon">
-		</div>
-		<div>
-			<h4 class="logo-text text-success">AKHIS</h4>
-		</div>
+		<a href="<?= base_url(); ?>" class="d-flex align-items-center">
+			<div>
+				<img src="<?= base_url('assets'); ?>/img/logo.jpg" class="logo-icon" alt="logo icon">
+			</div>
+			<div>
+				<h4 class="logo-text text-success">AKHIS</h4>
+			</div>
+		</a>
 		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 		</div>
 	</div>
@@ -34,12 +36,24 @@
 			</a>
 		</li>
 		<li>
-			<a href="<?= base_url('dokter/lihat/chat_info'); ?>">
+			<a href="<?= base_url('dokter/chat'); ?>">
 				<div class="parent-icon"><i class="far fa-comments"></i>
 				</div>
-				<div class="menu-title">Chat <span class="alert-count">1</span></div>
+				<div class="menu-title">Chat <div id="chat-notif"></div></div>
 			</a>
 		</li>
 	</ul>
 	<!--end navigation-->
 </div>
+<script>
+	setInterval(function () {
+		$.ajax({
+			url: "<?= base_url('dokter/chat/belum_dibaca'); ?>",
+			success: function (result) {
+				console.log(result)
+				$('#chat-notif').html(result);
+			}
+		})
+	}, 500)
+
+</script>

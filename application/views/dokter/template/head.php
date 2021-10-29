@@ -25,7 +25,7 @@
 	<link rel="stylesheet" href="<?= base_url('assets'); ?>/akhis/css/header-colors.css" />
 	<link rel="stylesheet" href="<?= base_url('assets'); ?>/icon/font-awesome/css/all.css">
 	<script src="<?= base_url('assets'); ?>/icon/font-awesome/js/all.min.js"></script>
-	<title>Rukada - Responsive Bootstrap 5 Admin Template</title>
+	<title><?= $title; ?></title>
 </head>
 
 <body>

@@ -12,7 +12,7 @@
 	<!--navigation-->
 	<ul class="metismenu" id="menu">
 		<li>
-			<a href="<?= base_url('dokter'); ?>">
+			<a href="<?= base_url('pasien/home'); ?>">
 				<div class="parent-icon"><i class='bx bx-home-circle'></i>
 				</div>
 				<div class="menu-title">Home</div>
@@ -26,12 +26,31 @@
 			</a>
 		</li>
 		<li>
+			<a href="<?= base_url('pasien/lihat/obat/'. $this->session->userdata('id')); ?>">
+				<div class="parent-icon"><i class="fas fa-capsules"></i>
+				</div>
+				<div class="menu-title">Obat Saya</div>
+			</a>
+		</li>
+		<li>
 			<a href="<?= base_url('pasien/chat'); ?>">
 				<div class="parent-icon"><i class="far fa-comments"></i>
 				</div>
-				<div class="menu-title">Chat <span class="alert-count">1</span></div>
+				<div class="menu-title">Chat <div id="chat-notif"></div></div>
 			</a>
 		</li>
 	</ul>
 	<!--end navigation-->
 </div>
+<script>
+	setInterval(function () {
+		$.ajax({
+			url: "<?= base_url('pasien/chat/belum_dibaca'); ?>",
+			success: function (result) {
+				console.log(result);
+				$('#chat-notif').html(result);
+			}
+		})
+	}, 500)
+
+</script>

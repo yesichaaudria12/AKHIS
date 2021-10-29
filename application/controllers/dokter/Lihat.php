@@ -24,11 +24,20 @@ class Lihat extends CI_Controller {
     public function obat()
 	{
 		$data['obat'] = $this->Model_read->ambilData('obat');
-        $data['title'] = "Dashboard | Admin";
+        $data['title'] = "Daftar Obat | Admin";
 		$this->load->view('dokter/template/head', $data);
 		$this->load->view('dokter/template/header');
         $this->load->view('dokter/template/sidebar');
 		$this->load->view('dokter/v_obat');
+		$this->load->view('dokter/template/footer');
+	}
+	public function pasien(){
+		$data['pasien'] = $this->Model_read->ambilData('pasien');
+		$data['title'] = "Daftar Obat | Admin";
+		$this->load->view('dokter/template/head', $data);
+		$this->load->view('dokter/template/header');
+        $this->load->view('dokter/template/sidebar');
+		$this->load->view('dokter/v_pasien');
 		$this->load->view('dokter/template/footer');
 	}
 }

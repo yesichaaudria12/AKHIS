@@ -8,8 +8,9 @@ class Auth extends CI_Controller {
 	}
 	public function login()
 	{
-		if ($this->session->userdata('id_pasien')){
-            redirect($this->session->userdata('home'));
+		if ($this->session->userdata('id')){
+            $role = $this->session->userdata('role');
+            redirect($this->session->userdata($role.'/home'));
         }
         $this->form_validation->set_rules('email', 'email', 'required|trim', [
             'required' => 'Email NIP wajib di isi',
@@ -34,8 +35,9 @@ class Auth extends CI_Controller {
 	}
 	
 	public function daftar(){
-		if ($this->session->userdata('id_pasien')){
-            redirect($this->session->userdata('home'));
+		if ($this->session->userdata('id')){
+            $role = $this->session->userdata('role');
+            redirect($this->session->userdata($role.'/home'));
         }
         $this->form_validation->set_rules('nama_lengkap', 'nama_lengkap', 'required|trim', [
             'required' => 'Nama Lengkap wajib di isi',
@@ -68,6 +70,9 @@ class Auth extends CI_Controller {
 	}
     public function logout()
     {
+        $id_user = $this->session->userdata('id');
+        $role = $this->session->userdata('role');
+        offline($id_user, $role);
         $this->session->sess_destroy();
         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         <strong>Logout Berhasil!</strong>

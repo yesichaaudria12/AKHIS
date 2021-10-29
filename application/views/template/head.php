@@ -9,9 +9,17 @@
 	<!--favicon-->
 	<link rel="icon" href="<?= base_url('assets'); ?>/img/logo.ico" type="image/png" />
 
+	<!-- Plugins -->
+	<link rel="stylesheet" href="<?= base_url('assets'); ?>/akhis/plugins/select2/css/select2.min.css"/>
+	<link rel="stylesheet" href="<?= base_url('assets'); ?>/akhis/plugins/select2/css/select2-bootstrap4.css"/>
+	<link rel="stylesheet" href="<?= base_url('assets'); ?>/akhis/css/header-colors.css" />
+	<link rel="stylesheet" href="<?= base_url('assets'); ?>/icon/font-awesome/css/all.css">
+	<script src="<?= base_url('assets'); ?>/icon/font-awesome/js/all.min.js"></script>
+	<script src="<?= base_url('assets'); ?>/akhis/js/jquery.min.js"></script>
+
 	<!-- Bootstrap 5 CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+	<link href="<?= base_url('assets'); ?>/akhis/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?= base_url('assets'); ?>/akhis/css/app.css" rel="stylesheet">
 
 	<!-- Bootetrap Icon -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />

@@ -12,14 +12,16 @@ class Hapus extends CI_Controller {
         $this->db->delete($table, [$field => $id]);
         $result = $this->db->affected_rows();
         if ($result > 0) {
-            $this->session->set_flashdata('message', '<div class="alert alert-outline-success alert-dismissible fade show">
-            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-            </button>Data Berhasil Dihapus</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            <strong>Data berhasil dihapus!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
             redirect($this->session->userdata('kembali'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-outline-danger alert-dismissible fade show">
-            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-            </button>Data Gagal Dihapus</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            <strong>Data gagal dihapus!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
             redirect($this->session->userdata('kembali'));
         }
     }

@@ -105,11 +105,9 @@
 	<!-- Bootstrap JS -->
 	<script src="<?= base_url('assets'); ?>/akhis/js/bootstrap.bundle.min.js"></script>
 	<!--plugins-->
-	<script src="<?= base_url('assets'); ?>/akhis/js/jquery.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/plugins/simplebar/js/simplebar.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/plugins/metismenu/js/metisMenu.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-	<script src="<?= base_url('assets'); ?>/akhis/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/plugins/datatable/js/jquery.dataTables.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 	<script>

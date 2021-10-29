@@ -13,11 +13,13 @@ class Model_auth extends CI_Model
         $pasien = $this->db->get_where('pasien', ['email' => $email])->row_array();
         if ($admin) {
             if (password_verify($password, $admin['password'])) {
+                online($admin['id_admin'], 'admin');
                 $this->session->set_userdata([
                     'role' => 'admin',
                     'id' => $admin['id_admin'],
                     'foto' => $admin['foto'],
                     'nama' => $admin['nama_lengkap'],
+                    'status' => $admin['status_online'],
                 ]);
                 $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                 <strong>Login Berhasil!</strong>
@@ -33,11 +35,13 @@ class Model_auth extends CI_Model
             }
         }elseif ($dokter) {
             if (password_verify($password, $dokter['password'])) {
+                online($dokter['id_dokter'], 'dokter');
                 $this->session->set_userdata([
                     'role' => 'dokter',
                     'id' => $dokter['id_dokter'],
                     'foto' => $dokter['foto'],
                     'nama' => $dokter['nama_lengkap'],
+                    'status' => $dokter['status_online'],
                 ]);
                 $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                 <strong>Login Berhasil!</strong>
@@ -53,11 +57,13 @@ class Model_auth extends CI_Model
             }
         }elseif ($pasien) {
             if (password_verify($password, $pasien['password'])) {
+                online($pasien['id_pasien'], 'pasien');
                 $this->session->set_userdata([
                     'role' => 'pasien',
                     'id' => $pasien['id_pasien'],
                     'foto' => $pasien['foto'],
                     'nama' => $pasien['nama_lengkap'],
+                    'status' => $pasien['status_online'],
                 ]);
                 $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                 <strong>Login Berhasil!</strong>

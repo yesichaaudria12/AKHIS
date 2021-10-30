@@ -124,6 +124,13 @@
 		new PerfectScrollbar('.product-list');
 		new PerfectScrollbar('.customers-list');
 	</script>
+	<script src="<?= base_url('assets'); ?>/vendor/tinymce/tinymce.min.js"></script>
+	<script>
+		tinymce.init({
+			selector: '#mytextarea'
+		});
+
+	</script>
 </body>
 
 </html>

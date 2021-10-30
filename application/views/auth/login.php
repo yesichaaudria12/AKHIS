@@ -11,16 +11,8 @@
 								<p>belum punya akun? <a href="<?= base_url('auth/daftar'); ?>">Daftar di sini</a>
 								</p>
 							</div>
-							<div class="d-grid">
-								<a class="btn my-4 shadow-sm btn-white" href="javascript:;"> <span
-										class="d-flex justify-content-center align-items-center">
-										<img class="me-2" src="<?= base_url('assets'); ?>/akhis/images/icons/search.svg"
-											width="16" alt="Image Description">
-										<span>Login Dengan Google</span>
-									</span>
-								</a>
-							</div>
-							<div class="login-separater text-center mb-4"> <span>atau dengan email</span>
+							
+							<div class="login-separater text-center mb-4"> <span>DENGAN EMAIL</span>
 								<hr />
 							</div>
 							<div class="form-body">

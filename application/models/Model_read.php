@@ -4,13 +4,13 @@ ini_set('date.timezone', 'Asia/Jakarta');
 
 class Model_read extends CI_Model
 {
-    public function ambilData($table = null){
+    public function ambilData($table){
         return $this->db->get($table)->result_array();
     }
-    public function cariData($table = null, $where = null){
+    public function cariData($table, $where){
         return $this->db->get_where($table, $where)->row_array();
     }
-    public function ambilfield($table = null){
+    public function ambilfield($table){
         return $this->db->field_data($table);
     }
     public function chat_terbaru(){
@@ -46,5 +46,9 @@ class Model_read extends CI_Model
             $panggilan = "NY";
         }
         return $panggilan;
+    }
+    public function jumlah_pesanan($status){
+        $this->db->where('status', $status);
+        return $this->db->count_all_results('pesanan');
     }
 }

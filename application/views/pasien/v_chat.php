@@ -6,6 +6,16 @@
 
 <div class="page-wrapper">
 	<div class="page-content">
+	<!-- The toolbar will be rendered in this container. -->
+<div id="toolbar-container"></div>
+
+<!-- This container will become the editable. -->
+<div id="editor">
+    <p>This is the initial editor content.</p>
+</div>
+
+
+	<?= $this->session->flashdata('message'); ?>
 		<div class="chat-wrapper">
 			<div class="chat-sidebar">
 				<div class="chat-sidebar-header">
@@ -63,7 +73,7 @@
 			<div class="chat">
 				<div class="chat-header d-flex align-items-center">
 					<div class="chat-toggle-btn"><i class="bx bx-menu-alt-left"></i></div>
-					<img src="<?= base_url('assets'); ?>/img/dokter/default-L.png" width="48" height="48"class="rounded-circle" alt="" />
+					<img src="<?= base_url('assets'); ?>/img/dokter/<?= ambil_foto_byID($id_tujuan,'dokter'); ?>" width="48" height="48"class="rounded-circle" alt="" />
 					<div class="ms-1">
 						<h4 class="mb-1 font-weight-bold"><?= ambil_nama_byID($id_tujuan, 'dokter'); ?></h4>
 						<div class="list-inline d-sm-flex mb-0 d-none">

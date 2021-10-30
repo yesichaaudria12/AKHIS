@@ -26,7 +26,8 @@
 	<link rel="stylesheet" href="<?= base_url('assets'); ?>/icon/font-awesome/css/all.css">
 	<script src="<?= base_url('assets'); ?>/icon/font-awesome/js/all.min.js"></script>
 	<script src="<?= base_url('assets'); ?>/akhis/js/jquery.min.js"></script>
-	<title>Rukada - Responsive Bootstrap 5 Admin Template</title>
+	<script src="<?= base_url('assets'); ?>/vendor/ckeditor5/ckeditor.js"></script>
+	<title><?= $title; ?></title>
 </head>
 
 <body>

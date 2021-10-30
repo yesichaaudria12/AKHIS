@@ -1,5 +1,6 @@
 <div class="page-wrapper">
 	<div class="page-content">
+	<?= $this->session->flashdata('message'); ?>
 		<div class="card">
             <div class="card-header text-center">
                 <h3>Data Pasien</h3>

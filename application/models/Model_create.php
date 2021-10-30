@@ -21,7 +21,7 @@ class Model_create extends CI_Model
             <strong>Dokter berhasil ditambahkan!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>');
-            redirect($this->session->userdata('kembali'));
+            redirect('admin/home');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
             <strong>Dokter gagal ditambahkan!</strong>
@@ -45,7 +45,7 @@ class Model_create extends CI_Model
                 <strong>Obat berhasil ditambahkan!</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>');
-                redirect($this->session->userdata('kembali'));
+                redirect('admin/lihat/obat');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                 <strong>Obat gagal ditambahkan!</strong>

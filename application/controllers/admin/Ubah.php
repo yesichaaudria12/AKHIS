@@ -27,10 +27,14 @@ class Ubah extends CI_Controller {
             $this->load->view('admin/template/head', $data);
             $this->load->view('admin/template/header');
             $this->load->view('admin/template/sidebar');
-            $this->load->view('admin/ubah');
+            $this->load->view('admin/v_ubah');
             $this->load->view('admin/template/footer');
         }else{
             $this->Model_update->obat($id);
         }
     }
+    public function pesanan($id_resep,$status)
+	{
+		$this->Model_update->rubah_pesanan($id_resep, $status);
+	}
 }

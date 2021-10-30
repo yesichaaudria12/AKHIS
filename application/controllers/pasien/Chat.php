@@ -65,7 +65,7 @@ class Chat extends CI_Controller {
                 $output .= <<<HTML
                 <div class="chat-content-rightside" id="dokter">
                     <div class="d-flex">
-                        <div class="flex-grow-1 ms-2">
+                        <div class="flex-grow-1 ms-2" style="overflow-wrap: break-word;word-wrap: break-word;">
                             <p class="mb-0 chat-time text-end">Anda, $waktu</p>
                             <p class="chat-right-msg">$pesan</p>
                         </div>
@@ -77,7 +77,7 @@ class Chat extends CI_Controller {
                 $output .= <<<HTML
                 <div class="chat-content-leftside" id="dokter">
                     <div class="d-flex">
-                        <div class="flex-grow-1 ms-2">
+                        <div class="flex-grow-1 ms-2" style="overflow-wrap: break-word;word-wrap: break-word;">
                             <p class="mb-0 chat-time">$pesan_dari, $waktu</p>
                             <p class="chat-left-msg">$pesan</p>
                         </div>

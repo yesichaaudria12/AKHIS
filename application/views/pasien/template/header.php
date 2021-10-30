@@ -38,7 +38,9 @@
 					</div>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-end">
-					<li><a class="dropdown-item" href="javascript:;"><i class="bx bx-user"></i><span>Profile</span></a>
+				<li><a class="dropdown-item" href="<?= base_url('profile/lihat'); ?>"><i class="bx bx-user"></i><span>Profile</span></a>
+					</li>
+					<li><a class="dropdown-item" href="<?= base_url($this->session->userdata('role').'/home'); ?>"><i class='bx bx-home-circle'></i><span>Home</span></a>
 					</li>
 					<li>
 						<div class="dropdown-divider mb-0"></div>

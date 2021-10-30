@@ -1,5 +1,6 @@
 <div class="page-wrapper">
 	<div class="page-content">
+	<?= $this->session->flashdata('message'); ?>
 		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 			<div class="col">
 				<div class="card radius-10 bg-warning bg-gradient">

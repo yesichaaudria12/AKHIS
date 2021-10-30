@@ -6,6 +6,7 @@
 </style>
 <div class="page-wrapper">
 	<div class="page-content">
+	<?= $this->session->flashdata('message'); ?>
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 product-grid">
             <?php foreach($obat as $obat) :?>
 			<div class="col">

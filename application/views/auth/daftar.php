@@ -10,16 +10,7 @@
 								<p>Sudah punya akun? <a href="<?= base_url('auth/login'); ?>">Login</a>
 								</p>
 							</div>
-							<div class="d-grid">
-								<a class="btn my-4 shadow-sm btn-white" href="javascript:;"> <span
-										class="d-flex justify-content-center align-items-center">
-										<img class="me-2" src="<?= base_url('assets'); ?>/akhis/images/icons/search.svg"
-											width="16" alt="Image Description">
-										<span>Daftar dengan Google</span>
-									</span>
-								</a>
-							</div>
-							<div class="login-separater text-center mb-4"> <span>ATAU DENGAN EMAIL</span>
+							<div class="login-separater text-center mb-4"> <span>DENGAN EMAIL</span>
 								<hr />
 							</div>
 							<div class="form-body">

@@ -18,7 +18,7 @@ class Model_update extends CI_Model
             <strong>Obat berhasil dirubah!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>');
-            redirect($this->session->userdata('kembali'));
+            redirect('admin/lihat/obat');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
             <strong>Obat gagal dirubah!</strong>
@@ -98,5 +98,80 @@ class Model_update extends CI_Model
             </div>');
             redirect(current_url());
         }
+    }
+    public function password($role, $id){
+        $cek = $this->db->get_where($role, ['id_'.$role => $id])->row_array();
+        if (password_verify($this->input->post('password_lama'), $cek['password'])){
+            if(!password_verify($this->input->post('password_baru'), $cek['password'])){
+                $password = password_hash($this->input->post('password_baru'),PASSWORD_DEFAULT);
+                $this->db->set('password', $password);
+                $this->db->where('id_'.$role, $id);
+                $this->db->update($role);
+                $result = $this->db->affected_rows();
+                if ($result > 0){
+                    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <strong>Password berhasil dirubah!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>');
+                    redirect(current_url());
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <strong>Password gagal dirubah!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>');
+                    redirect(current_url());
+                }
+            } $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>Password Baru sama dengan password lama!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect(current_url());
+        }else{
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>Password lama salah!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect(current_url());
+        }
+    }
+    public function profile($role, $id){
+        $this->db->where("id_$role", $id);
+        $this->db->update($role, $_POST);
+        $result = $this->db->affected_rows();
+        if ($result > 0){
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            <strong>Profile berhasil dirubah!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect(current_url());
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>Profile masih sama!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect(current_url());
+        }
+    }
+    public function rubah_pesanan($id_resep, $status){
+        if ($status == 'dikirim'){
+            $this->db->set('no_resi', $this->input->post('no_resi'));
+        }
+        $this->db->set('status', $status);
+        $this->db->where('id_resep', $id_resep);
+        $this->db->update('pesanan');
+        $result = $this->db->affected_rows();
+            if ($result > 0){
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                <strong>Status pesanan berhasil dirubah!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>');
+                redirect('admin/lihat/pesanan/'.$status);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <strong>Status pesanan masih sama!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>');
+                redirect(current_url());
+            }
     }
 }

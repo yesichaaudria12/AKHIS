@@ -146,4 +146,9 @@ function lihat_bukti($id_resep){
     $data = $ci->db->get_where('pembayaran', ['invoice' => $invoice])->row_array();
     return $data['bukti_bayar'];
 }
+function ambil_resi($id_resep){
+    $ci = get_instance();
+    $data =$ci->db->get_where('pesanan', ['id_resep' => $id_resep])->row_array();
+    return $data['no_resi'];
+}
 ?>

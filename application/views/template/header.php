@@ -37,8 +37,12 @@
 							</div>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
-							<li><a class="dropdown-item" href="javascript:;"><i
+							<li><a class="dropdown-item" href="<?= base_url('profile/lihat'); ?>"><i
 										class="bx bx-user"></i><span>Profile</span></a>
+							</li>
+							<li><a class="dropdown-item"
+									href="<?= base_url($this->session->userdata('role').'/home'); ?>"><i
+										class='bx bx-home-circle'></i><span>Home</span></a>
 							</li>
 							<li>
 								<div class="dropdown-divider mb-0"></div>
@@ -47,13 +51,14 @@
 										class='bx bx-log-out-circle'></i><span>Logout</span></a>
 							</li>
 						</ul>
-					</div>
-					<?php else: ?>
-					<a href="<?= base_url('auth/login'); ?>" class="btn btn-primary">Login</a>
-					<?php endif; ?>
-				</li>
 			</ul>
 		</div>
+		<?php else: ?>
+		<a href="<?= base_url('auth/login'); ?>" class="btn btn-primary">Login</a>
+		<?php endif; ?>
+		</li>
+		</ul>
+	</div>
 	</div>
 </nav>
 <!-- End Navbar -->

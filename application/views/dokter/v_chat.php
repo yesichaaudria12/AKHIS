@@ -6,6 +6,7 @@
 
 <div class="page-wrapper">
 	<div class="page-content">
+	<?= $this->session->flashdata('message'); ?>
 		<div class="chat-wrapper">
 			<div class="chat-sidebar">
 				<div class="chat-sidebar-header">

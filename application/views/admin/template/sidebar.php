@@ -1,25 +1,53 @@
-<div id="layoutSidenav_nav">
-	<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-		<div class="sb-sidenav-menu">
-			<div class="nav">
-				<div class="sb-sidenav-menu-heading"><?= $this->session->userdata('role'); ?></div>
-				<a class="nav-link" href="<?= base_url('admin/home'); ?>">
-					<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-					Dashboard
-				</a>
-				<a class="nav-link" href="<?= base_url('admin/tambah/dokter'); ?>">
-					<div class="sb-nav-link-icon"><i class="fas fa-user-md"></i></div>
-					Tambah Dokter
-				</a>
-				<a class="nav-link" href="<?= base_url('admin/lihat/obat'); ?>">
-					<div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-					Data Obat
-				</a>
-				<a class="nav-link" href="<?= base_url('admin/lihat/profile'); ?>">
-					<div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-					Profile
-				</a>
-			</div>
+<div class="sidebar-wrapper" data-simplebar="true">
+	<div class="sidebar-header">
+		<div>
+			<img src="<?= base_url('assets'); ?>/img/logo.jpg" class="logo-icon" alt="logo icon">
 		</div>
-	</nav>
+		<div>
+			<h4 class="logo-text text-success">AKHIS</h4>
+		</div>
+		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
+		</div>
+	</div>
+	<!--navigation-->
+	<ul class="metismenu" id="menu">
+		<li>
+			<a href="<?= base_url('pasien/home'); ?>">
+				<div class="parent-icon"><i class="fas fa-tachometer-alt"></i>
+				</div>
+				<div class="menu-title">Dashboard</div>
+			</a>
+		</li>
+		<li>
+			<a href="<?= base_url('admin/tambah/dokter'); ?>">
+				<div class="parent-icon"><i class="fas fa-user-md"></i>
+				</div>
+				<div class="menu-title">Tambah Dokter</div>
+			</a>
+		</li>
+		<li>
+			<a href="<?= base_url('admin/lihat/obat'); ?>">
+				<div class="parent-icon"><i class="fas fa-capsules"></i>
+				</div>
+				<div class="menu-title">Data Obat</div>
+			</a>
+		</li>
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class="fas fa-cash-register"></i>
+				</div>
+				<div class="menu-title">Pesanan</div>
+			</a>
+			<ul>
+				<li> <a href="<?= base_url('admin/lihat/pesanan/menunggu_konfirmasi'); ?>"><i class="bx bx-right-arrow-alt"></i>Menunggu Konfirmasi <div id="mk"></div></a>
+				</li>
+				<li> <a href="<?= base_url('admin/lihat/pesanan/dikemas'); ?>"><i class="bx bx-right-arrow-alt"></i>Dikemas <div id="dikemas"></div></a>
+				</li>
+				<li> <a href="<?= base_url('admin/lihat/pesanan/dikirim'); ?>"><i class="bx bx-right-arrow-alt"></i>Dikirim <div id="dikirim"></div></a>
+				</li>
+				<li> <a href="<?= base_url('admin/lihat/pesanan/selesai'); ?>"><i class="bx bx-right-arrow-alt"></i>selesai</a>
+			</ul>
+		</li>
+	</ul>
+	<!--end navigation-->
 </div>

@@ -8,11 +8,25 @@ class Tambah extends CI_Controller {
     public function dokter(){
         $fields = $this->Model_read->ambilfield('dokter');
         $data['columns'] = array_slice($fields,1, 4);
+        $data['url'] = base_url('admin/tambah/dokter');
         foreach ($data['columns'] as $column) {
             if ($column->name != 'foto'){
-                $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
+                if ($column->name == 'email'){
+                $this->form_validation->set_rules($column->name, $column->name, 'required|trim|is_unique[dokter.email]', [
                     'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                    'is_unique' => str_replace("_", " ", $column->name) . ' sudah di gunakan',
                 ]);
+                }
+                elseif ($column->name == 'nama_lengkap'){
+                $this->form_validation->set_rules($column->name, $column->name, 'required|trim|is_unique[dokter.nama_lengkap]', [
+                    'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                    'is_unique' => str_replace("_", " ", $column->name) . ' sudah di gunakan',
+                ]);
+                }else{
+                    $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
+                        'required' => str_replace("_", " ", $column->name) . ' wajib di isi',
+                    ]);
+                }
             }
         }
         if ($this->form_validation->run() == false){
@@ -26,7 +40,7 @@ class Tambah extends CI_Controller {
             $this->load->view('admin/template/head', $data);
             $this->load->view('admin/template/header');
             $this->load->view('admin/template/sidebar');
-            $this->load->view('admin/tambah');
+            $this->load->view('admin/v_tambah');
             $this->load->view('admin/template/footer');
         }else{
             $this->Model_create->dokter();
@@ -34,7 +48,8 @@ class Tambah extends CI_Controller {
     }
     public function obat(){
         $fields = $this->Model_read->ambilfield('obat');
-        $data['columns'] = array_slice($fields,1, 8);
+        $data['columns'] = array_slice($fields,1, 9);
+        $data['url'] = base_url('admin/tambah/obat');
         foreach ($data['columns'] as $column) {
             if ($column->name != 'keterangan' AND $column->name != 'gambar'){
                 $this->form_validation->set_rules($column->name, $column->name, 'required|trim', [
@@ -43,8 +58,9 @@ class Tambah extends CI_Controller {
             }
         }
         if ($this->form_validation->run() == false) {
-            $data['type'] = ['text', 'text', 'text', 'text', 'text','text','text','file'];
-            $data['input'] = ['', 'options', 'textarea','textarea','textarea','','textarea',''];
+            
+            $data['type'] = ['text', 'text', 'text', 'text', 'text','text','text','text','file'];
+            $data['input'] = ['', 'options', 'textarea','textarea','textarea','','','textarea',''];
             $data['options'] = $this->db->get('jenis_obat')->result_array();
             $data['value'] = 'jenis';
             $data['list'] = 'jenis';
@@ -53,7 +69,7 @@ class Tambah extends CI_Controller {
             $this->load->view('admin/template/head', $data);
             $this->load->view('admin/template/header');
             $this->load->view('admin/template/sidebar');
-            $this->load->view('admin/tambah');
+            $this->load->view('admin/v_tambah');
             $this->load->view('admin/template/footer');
         }else{
             $this->Model_create->obat();

@@ -11,11 +11,14 @@ class Chat extends CI_Controller {
         if ($id){
             $data['id_tujuan'] = $id; 
             $this->Model_update->baca_pesan($id);
-            $data = [
-                'id_dokter' => $id,
-                'id_pasien' => $this->session->userdata('id')
-            ];
-            $this->db->insert('live_chat', $data);
+            $lc = $this->Model_read->pilih_live_chat($this->session->userdata('id'), $id);
+            if (!$lc){
+                $data = [
+                    'id_dokter' => $id,
+                    'id_pasien' => $this->session->userdata('id')
+                ];
+                $this->db->insert('live_chat', $data);
+            }
         }
 		$data['chat'] = $this->Model_read->live_chat_pasien();
         $data['title'] = "Chat Dokter | ". nama_web();
@@ -29,7 +32,7 @@ class Chat extends CI_Controller {
         $dari = $this->input->post('dari');
         $kepada = $this->input->post('kepada');
         $pesan = $this->input->post('pesan');
-        $lc = $this->Model_read->pilih_live_chat($dari, $kepada);
+        $lc = $this->Model_read->pilih_live_chat($kepada, $dari);
         $data = [
             'id_LC' => $lc['id_LC'],
             'dari' => $dari,

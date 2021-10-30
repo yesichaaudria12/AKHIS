@@ -73,7 +73,9 @@ function chat_terbaru($id_LC = null){
     $ci->db->order_by('id','DESC');
     $ci->db->limit(1);
     $data =$ci->db->get('chat')->row_array();
-    return $data;
+    if($data){
+        return $data;
+    }
 }
 function chat_belum_dibaca($id_LC = null){
     $ci = get_instance();

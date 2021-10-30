@@ -30,31 +30,33 @@
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-Chats">
 							<div class="chat-list">
-								<?php foreach($chat as $chat): 
-									$id_dokter = $chat['id_dokter'];
-									$pesan = chat_terbaru($chat['id_LC'])['pesan'];
-									$waktu = chat_terbaru($chat['id_LC'])['tanggal_dikirim'];
-									if ($waktu == date('Y-m-d')){
-										$waktu = str_replace(':','.',substr(chat_terbaru($chat['id_LC'])['jam_dikirim'],0,5));
-									}?>
-								<div class="list-group list-group-flush">
-									<a href="<?= base_url('pasien/chat/index/'.$id_dokter); ?>"
-										class="list-group-item active">
-										<div class="d-flex">
-											<div class="chat-user-<?= status_online($id_dokter, 'dokter'); ?>">
-												<img src="<?= base_url('assets'); ?>/img/dokter/<?= ambil_foto_byID($chat['id_dokter'], 'dokter'); ?>"
-													width="42" height="42" class="rounded-circle" alt="" />
-											</div>
-											<div class="flex-grow-1 ms-2">
-												<h6 class="mb-0 chat-title">
-													<?= ambil_nama_byID($chat['id_dokter'], 'dokter'); ?></h6>
-												<p class="mb-0 chat-msg"><?= $pesan; ?></p><?= chat_belum_dibaca($chat['id_LC']) ? '<span class="alert-count">'.chat_belum_dibaca($chat['id_LC']).'</span>' : ""; ?>
-											</div>
-											<div class="chat-time"><?= $waktu; ?></div>
+								<?php if ($chat): ?>
+										<?php foreach($chat as $chat): 
+											$id_dokter = $chat['id_dokter'];
+											$pesan = chat_terbaru($chat['id_LC'])['pesan'];
+											$waktu = chat_terbaru($chat['id_LC'])['tanggal_dikirim'];
+											if ($waktu == date('Y-m-d')){
+												$waktu = str_replace(':','.',substr(chat_terbaru($chat['id_LC'])['jam_dikirim'],0,5));
+											}?>
+										<div class="list-group list-group-flush">
+											<a href="<?= base_url('pasien/chat/index/'.$id_dokter); ?>"
+												class="list-group-item active">
+												<div class="d-flex">
+													<div class="chat-user-<?= status_online($id_dokter, 'dokter'); ?>">
+														<img src="<?= base_url('assets'); ?>/img/dokter/<?= ambil_foto_byID($chat['id_dokter'], 'dokter'); ?>"
+															width="42" height="42" class="rounded-circle" alt="" />
+													</div>
+													<div class="flex-grow-1 ms-2">
+														<h6 class="mb-0 chat-title">
+															<?= ambil_nama_byID($chat['id_dokter'], 'dokter'); ?></h6>
+														<p class="mb-0 chat-msg"><?= $pesan; ?></p><?= chat_belum_dibaca($chat['id_LC']) ? '<span class="alert-count">'.chat_belum_dibaca($chat['id_LC']).'</span>' : ""; ?>
+													</div>
+													<div class="chat-time"><?= $waktu; ?></div>
+												</div>
+											</a>
 										</div>
-									</a>
-								</div>
-								<?php endforeach ?>
+										<?php endforeach ?>
+								<?php endif ?>
 							</div>
 						</div>
 					</div>

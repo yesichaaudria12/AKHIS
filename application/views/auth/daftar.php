@@ -22,7 +22,7 @@
 									<?= form_error('nama_lengkap', '<small class="text-danger">', '</small>'); ?>
 									<label for="nama_lengkap" class="form-label">jenis Kelamin</label>
 									<select class="form-select mt-0" name="jenis_kelamin">
-										<option selected>Pilih</option>
+										<option selected value="<?= set_value('jenis_kelamin'); ?>"><?= set_value('jenis_kelamin') ? set_value('jenis_kelamin'): "Pilih"; ?></option>
 										<option value="L">Laki - Laki</option>
 										<option value="P">Perempuan</option>
 									</select>

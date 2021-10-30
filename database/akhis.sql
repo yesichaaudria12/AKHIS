@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Okt 2021 pada 03.13
+-- Waktu pembuatan: 30 Okt 2021 pada 11.32
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -33,15 +33,16 @@ CREATE TABLE `admin` (
   `no_hp` varchar(13) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` text NOT NULL,
-  `foto` text NOT NULL
+  `foto` text NOT NULL,
+  `status_online` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `nama_lengkap`, `no_hp`, `email`, `password`, `foto`) VALUES
-(11020001, 'Admin Akhis ', '6281290853613', 'akhis@gmail.com', '', '');
+INSERT INTO `admin` (`id_admin`, `nama_lengkap`, `no_hp`, `email`, `password`, `foto`, `status_online`) VALUES
+(11021001, 'Admin Akhis', '6281290345678', 'akhis@gmail.com', '$2y$10$vCrBRT7mStlN6GyRS7XcfudtU7ElFNBHrChDcUXqRX5.l51ypDPBq', 'default-L.png', 'offline');
 
 -- --------------------------------------------------------
 
@@ -77,9 +78,14 @@ CREATE TABLE `artikel` (
 --
 
 CREATE TABLE `chat` (
-  `pesan` int(11) NOT NULL,
-  `id_dokter` int(11) NOT NULL,
-  `id_pasien` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `id_LC` int(11) NOT NULL,
+  `pesan` text NOT NULL,
+  `dari` int(11) NOT NULL,
+  `kepada` int(11) NOT NULL,
+  `tanggal_dikirim` date NOT NULL,
+  `jam_dikirim` time NOT NULL,
+  `status` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -89,11 +95,11 @@ CREATE TABLE `chat` (
 --
 
 CREATE TABLE `detail_resep` (
+  `id` int(11) NOT NULL,
   `id_resep` int(11) NOT NULL,
   `id_obat` int(11) NOT NULL,
   `Qty` int(11) NOT NULL,
-  `aturan_minum` text NOT NULL,
-  `subtotal` int(11) NOT NULL
+  `aturan_minum` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -104,10 +110,20 @@ CREATE TABLE `detail_resep` (
 
 CREATE TABLE `digital_payment` (
   `id_dp` int(11) NOT NULL,
-  `no_hp` int(11) NOT NULL,
-  `nama_aplikasi` varchar(35) NOT NULL,
-  `A/n` varchar(35) NOT NULL
+  `no_akun` varchar(16) NOT NULL,
+  `nama_platform` varchar(35) NOT NULL,
+  `atas_nama` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `digital_payment`
+--
+
+INSERT INTO `digital_payment` (`id_dp`, `no_akun`, `nama_platform`, `atas_nama`) VALUES
+(1, '087654362892', 'dana', 'admin akhis'),
+(2, '087654362892', 'gopay', 'admin akhis'),
+(3, '12457292462', 'Bank Mandiri', 'admin akhis'),
+(4, '45372478392', 'Bank BCA', 'admin akhis');
 
 -- --------------------------------------------------------
 
@@ -117,18 +133,73 @@ CREATE TABLE `digital_payment` (
 
 CREATE TABLE `dokter` (
   `id_dokter` int(11) NOT NULL,
+  `foto` text NOT NULL,
+  `nama_lengkap` varchar(45) NOT NULL,
+  `jenis_kelamin` varchar(1) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` text NOT NULL,
-  `nama_lengkap` varchar(45) NOT NULL,
-  `foto` text NOT NULL
+  `status_online` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `hak_akses`
+--
+
+CREATE TABLE `hak_akses` (
+  `id` int(11) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `controller_access` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `dokter`
+-- Dumping data untuk tabel `hak_akses`
 --
 
-INSERT INTO `dokter` (`id_dokter`, `email`, `password`, `nama_lengkap`, `foto`) VALUES
-(21020001, 'dokter1@gmail.com', '', 'Dr. Yulia', '');
+INSERT INTO `hak_akses` (`id`, `role`, `controller_access`) VALUES
+(1, 'admin', 'admin'),
+(2, 'dokter', 'dokter'),
+(3, 'pasien', 'pasien');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `jenis_obat`
+--
+
+CREATE TABLE `jenis_obat` (
+  `id` int(11) NOT NULL,
+  `jenis` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `jenis_obat`
+--
+
+INSERT INTO `jenis_obat` (`id`, `jenis`) VALUES
+(1, 'kapsul'),
+(2, 'bubuk');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `live_chat`
+--
+
+CREATE TABLE `live_chat` (
+  `id_LC` int(11) NOT NULL,
+  `id_pasien` int(11) NOT NULL,
+  `id_dokter` int(11) NOT NULL,
+  `terakhir_chat` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `live_chat`
+--
+
+INSERT INTO `live_chat` (`id_LC`, `id_pasien`, `id_dokter`, `terakhir_chat`) VALUES
+(5, 31020002, 22110001, '2021-10-30 16:12:52');
 
 -- --------------------------------------------------------
 
@@ -138,13 +209,26 @@ INSERT INTO `dokter` (`id_dokter`, `email`, `password`, `nama_lengkap`, `foto`) 
 
 CREATE TABLE `obat` (
   `id_obat` int(11) NOT NULL,
-  `nama` decimal(50,0) NOT NULL,
+  `nama_obat` varchar(50) NOT NULL,
   `jenis` varchar(35) NOT NULL,
+  `komposisi` text NOT NULL,
+  `dosis` text NOT NULL,
+  `efek_samping` text NOT NULL,
   `harga` double NOT NULL,
+  `satuan` varchar(25) NOT NULL,
+  `keterangan` text NOT NULL,
   `gambar` text NOT NULL,
   `created_at` date NOT NULL,
   `id_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `obat`
+--
+
+INSERT INTO `obat` (`id_obat`, `nama_obat`, `jenis`, `komposisi`, `dosis`, `efek_samping`, `harga`, `satuan`, `keterangan`, `gambar`, `created_at`, `id_admin`) VALUES
+(1, 'Sumagesic 600 mg 4', 'bubuk', 'Tiap tablet mengandung Paracetamol 600 mg', 'Dewasa : 1 tablet, 3-4 kali sehari atau sesuai petunjuk dokter.', 'Pemakaian obat umumnya memiliki efek samping tertentu dan sesuai dengan masing-masing individu. Jika terjadi efek samping yang berlebih dan berbahaya, harap konsultasikan kepada tenaga medis. Efek samping yang mungkin terjadi dalam penggunaan obat adalah: - Penggunaan untuk jangka waktu lama dan dosis besar dapat menyebabkan kerusakan fungsi hati. - Reaksi hipersensitifitas/ alergi.', 3200, 'strip', 'SUMAGESIC TABLET merupakan obat dengan kandungan Paracetamol 600 mg. Obat ini dapat digunakan untuk meringankan rasa sakit pada sakit kepala, sakit gigi, dan menurunkan demam. Paracetamol pada kandungan obat ini bekerja pada pusat pengatur suhu di hipotalamus untuk menurunkan suhu tubuh (antipiretik) serta menghambat sintesis prostaglandin sehingga dapat mengurangi nyeri ringan sampai sedang (analgesik).\r\nIndikasi Umum', '1635250167.jpg', '2021-10-26', 11021001),
+(2, 'Paracetamol (Acetaminophen)', 'kapsul', 'Setiap tablet mengandung Paracetamol 500 mg', 'Dewasa: 1-2 kaplet, 3-4 kali per hari. Penggunaan maximum 8 kaplet per hari. Anak 7-12 tahun : 0.5 - 1 kaplet, 3-4 kali per hari. Penggunaan maximum 4 kaplet per hari.', 'Pemakaian obat umumnya memiliki efek samping tertentu dan sesuai dengan masing-masing individu. Jika terjadi efek samping yang berlebih dan berbahaya, harap konsultasikan kepada tenaga medis. Efek samping yang mungkin terjadi dalam penggunaan obat adalah: - Penggunaan untuk jangka waktu lama dan dosis besar dapat menyebabkan kerusakan fungsi hati. - Reaksi hipersensitifitas/ alergi.', 2000, 'Strip', 'PARACETAMOL TABLET merupakan obat yang dapat digunakan untuk meringankan rasa sakit pada sakit kepala, sakit gigi, dan menurunkan demam. Paracetamol bekerja pada pusat pengatur suhu di hipotalamus untuk menurunkan suhu tubuh (antipiretik) serta menghambat sintesis prostaglandin sehingga dapat mengurangi nyeri ringan sampai sedang (analgesik.', '1635251133.jpg', '2021-10-26', 11021001);
 
 -- --------------------------------------------------------
 
@@ -155,20 +239,15 @@ CREATE TABLE `obat` (
 CREATE TABLE `pasien` (
   `id_pasien` int(11) NOT NULL,
   `nama_lengkap` varchar(35) NOT NULL,
+  `jenis_kelamin` varchar(1) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `alamat` text NOT NULL,
   `no_hp` varchar(13) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` text NOT NULL,
-  `foto` text NOT NULL
+  `foto` text NOT NULL,
+  `status_online` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `pasien`
---
-
-INSERT INTO `pasien` (`id_pasien`, `nama_lengkap`, `tanggal_lahir`, `alamat`, `no_hp`, `email`, `password`, `foto`) VALUES
-(31020001, 'Yesicha Audria', '2001-05-12', 'Jalan Mawar no 10', '6281234567891', 'yesicha@gmail.com', '', '');
 
 -- --------------------------------------------------------
 
@@ -178,15 +257,27 @@ INSERT INTO `pasien` (`id_pasien`, `nama_lengkap`, `tanggal_lahir`, `alamat`, `n
 
 CREATE TABLE `pembayaran` (
   `id_pembayaran` int(11) NOT NULL,
-  `bukti` text NOT NULL,
+  `bukti_bayar` text NOT NULL,
   `dibayar_pada` date NOT NULL,
   `dikonfirmasi_pada` date NOT NULL,
-  `total_bayar` int(11) NOT NULL,
+  `total_bayar` double NOT NULL,
   `status_lunas` enum('lunas','belum lunas') NOT NULL,
-  `kwterangan` text NOT NULL,
+  `keterangan` text NOT NULL,
   `id_dp` int(11) NOT NULL,
-  `id_ab` int(11) NOT NULL,
-  `invoice` int(11) NOT NULL
+  `invoice` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pesanan`
+--
+
+CREATE TABLE `pesanan` (
+  `invoice` varchar(25) NOT NULL,
+  `id_resep` int(11) NOT NULL,
+  `status` varchar(35) NOT NULL,
+  `no_resi` varchar(35) DEFAULT 'belum dikirim'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -197,6 +288,7 @@ CREATE TABLE `pembayaran` (
 
 CREATE TABLE `resep` (
   `id_resep` int(11) NOT NULL,
+  `nama_resep` varchar(60) NOT NULL,
   `created_at` date NOT NULL,
   `id_dokter` int(11) NOT NULL,
   `id_pasien` int(11) NOT NULL
@@ -205,14 +297,58 @@ CREATE TABLE `resep` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Stand-in struktur untuk tampilan `v_detail_resep`
+-- (Lihat di bawah untuk tampilan aktual)
 --
+CREATE TABLE `v_detail_resep` (
+`id` int(11)
+,`id_resep` int(11)
+,`nama_resep` varchar(60)
+,`id_obat` int(11)
+,`nama_obat` varchar(50)
+,`Qty` int(11)
+,`aturan_minum` text
+,`gambar` text
+,`sub_total` double
+,`dibuat_oleh` int(11)
+,`dibuat_untuk` int(11)
+,`nama_lengkap` varchar(35)
+,`alamat` text
+);
 
-CREATE TABLE `transaksi` (
-  `status` varchar(35) NOT NULL,
-  `invoice` int(11) NOT NULL,
-  `id_resep` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `v_pesanan`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `v_pesanan` (
+`id_resep` int(11)
+,`foto` text
+,`nama_lengkap` varchar(35)
+,`nama_resep` varchar(60)
+,`status` varchar(35)
+,`alamat` text
+,`no_hp` varchar(13)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `v_detail_resep`
+--
+DROP TABLE IF EXISTS `v_detail_resep`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_detail_resep`  AS SELECT `dr`.`id` AS `id`, `dr`.`id_resep` AS `id_resep`, `r`.`nama_resep` AS `nama_resep`, `dr`.`id_obat` AS `id_obat`, `o`.`nama_obat` AS `nama_obat`, `dr`.`Qty` AS `Qty`, `dr`.`aturan_minum` AS `aturan_minum`, `o`.`gambar` AS `gambar`, `o`.`harga`* `dr`.`Qty` AS `sub_total`, `r`.`id_dokter` AS `dibuat_oleh`, `r`.`id_pasien` AS `dibuat_untuk`, `p`.`nama_lengkap` AS `nama_lengkap`, `p`.`alamat` AS `alamat` FROM (((`detail_resep` `dr` join `resep` `r` on(`dr`.`id_resep` = `r`.`id_resep`)) join `obat` `o` on(`dr`.`id_obat` = `o`.`id_obat`)) join `pasien` `p` on(`r`.`id_pasien` = `p`.`id_pasien`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `v_pesanan`
+--
+DROP TABLE IF EXISTS `v_pesanan`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pesanan`  AS SELECT `p`.`id_resep` AS `id_resep`, `ps`.`foto` AS `foto`, `ps`.`nama_lengkap` AS `nama_lengkap`, `r`.`nama_resep` AS `nama_resep`, `p`.`status` AS `status`, `ps`.`alamat` AS `alamat`, `ps`.`no_hp` AS `no_hp` FROM ((`pesanan` `p` join `resep` `r` on(`p`.`id_resep` = `r`.`id_resep`)) join `pasien` `ps` on(`r`.`id_pasien` = `ps`.`id_pasien`)) ;
 
 --
 -- Indexes for dumped tables
@@ -241,13 +377,13 @@ ALTER TABLE `artikel`
 -- Indeks untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  ADD KEY `chat_ibfk_1` (`id_dokter`),
-  ADD KEY `chat_ibfk_2` (`id_pasien`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `detail_resep`
 --
 ALTER TABLE `detail_resep`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `detail_resep_ibfk_1` (`id_resep`),
   ADD KEY `detail_resep_ibfk_2` (`id_obat`);
 
@@ -264,11 +400,29 @@ ALTER TABLE `dokter`
   ADD PRIMARY KEY (`id_dokter`);
 
 --
+-- Indeks untuk tabel `hak_akses`
+--
+ALTER TABLE `hak_akses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `jenis_obat`
+--
+ALTER TABLE `jenis_obat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `live_chat`
+--
+ALTER TABLE `live_chat`
+  ADD PRIMARY KEY (`id_LC`);
+
+--
 -- Indeks untuk tabel `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id_obat`),
-  ADD KEY `id_admin` (`id_admin`);
+  ADD KEY `obat_ibfk_1` (`id_admin`);
 
 --
 -- Indeks untuk tabel `pasien`
@@ -280,25 +434,74 @@ ALTER TABLE `pasien`
 -- Indeks untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  ADD PRIMARY KEY (`id_pembayaran`),
-  ADD KEY `pembayaran_ibfk_1` (`id_dp`),
-  ADD KEY `pembayaran_ibfk_2` (`id_ab`),
-  ADD KEY `pembayaran_ibfk_3` (`invoice`);
+  ADD PRIMARY KEY (`id_pembayaran`);
+
+--
+-- Indeks untuk tabel `pesanan`
+--
+ALTER TABLE `pesanan`
+  ADD PRIMARY KEY (`invoice`),
+  ADD KEY `transaksi_ibfk_1` (`id_resep`);
 
 --
 -- Indeks untuk tabel `resep`
 --
 ALTER TABLE `resep`
   ADD PRIMARY KEY (`id_resep`),
-  ADD KEY `id_dokter` (`id_dokter`),
-  ADD KEY `id_pasien` (`id_pasien`);
+  ADD KEY `resep_ibfk_1` (`id_dokter`),
+  ADD KEY `resep_ibfk_2` (`id_pasien`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
-ALTER TABLE `transaksi`
-  ADD PRIMARY KEY (`invoice`),
-  ADD KEY `transaksi_ibfk_1` (`id_resep`);
+
+--
+-- AUTO_INCREMENT untuk tabel `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- AUTO_INCREMENT untuk tabel `detail_resep`
+--
+ALTER TABLE `detail_resep`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT untuk tabel `digital_payment`
+--
+ALTER TABLE `digital_payment`
+  MODIFY `id_dp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `jenis_obat`
+--
+ALTER TABLE `jenis_obat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `live_chat`
+--
+ALTER TABLE `live_chat`
+  MODIFY `id_LC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `obat`
+--
+ALTER TABLE `obat`
+  MODIFY `id_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `resep`
+--
+ALTER TABLE `resep`
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -311,13 +514,6 @@ ALTER TABLE `artikel`
   ADD CONSTRAINT `artikel_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
--- Ketidakleluasaan untuk tabel `chat`
---
-ALTER TABLE `chat`
-  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id_dokter`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Ketidakleluasaan untuk tabel `detail_resep`
 --
 ALTER TABLE `detail_resep`
@@ -328,28 +524,13 @@ ALTER TABLE `detail_resep`
 -- Ketidakleluasaan untuk tabel `obat`
 --
 ALTER TABLE `obat`
-  ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
+  ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pembayaran`
+-- Ketidakleluasaan untuk tabel `pesanan`
 --
-ALTER TABLE `pembayaran`
-  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_dp`) REFERENCES `digital_payment` (`id_dp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `pembayaran_ibfk_2` FOREIGN KEY (`id_ab`) REFERENCES `akun_bank` (`id_ab`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `pembayaran_ibfk_3` FOREIGN KEY (`invoice`) REFERENCES `transaksi` (`invoice`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `resep`
---
-ALTER TABLE `resep`
-  ADD CONSTRAINT `resep_ibfk_1` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id_dokter`),
-  ADD CONSTRAINT `resep_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`);
-
---
--- Ketidakleluasaan untuk tabel `transaksi`
---
-ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_resep`) REFERENCES `resep` (`id_resep`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pesanan`
+  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`id_resep`) REFERENCES `resep` (`id_resep`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -8,9 +8,11 @@ function cek_status_login()
     } else {
         $role = $ci->session->userdata('role');
         $controller = $ci->uri->segment(1);
-        $akses = $ci->db->get_where('hak_akses', ['role' => $role, 'controller_access' => $controller])->row_array();
-        if ($akses < 1) {
-            redirect("$role/home");
+        if ($controller == 'admin' || $controller == 'dokter' || $controller == 'pasien'){
+            $akses = $ci->db->get_where('hak_akses', ['role' => $role, 'controller_access' => $controller])->row_array();
+            if ($akses < 1) {
+                redirect("$role/home");
+            }
         }
     }
 }

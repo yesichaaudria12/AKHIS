@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow">
 	<div class="container-fluid px-5">
-		<a class="navbar-brand" href="#"><img src="<?= base_url('assets'); ?>/img/logo.jpg" alt="" width="50">
+		<a class="navbar-brand" href="<?= base_url(); ?>"><img src="<?= base_url('assets'); ?>/img/logo.jpg" alt="" width="50">
 			<h5 class="d-inline-block text-success fw-bold" style="font-family: poppins;">AKHIS</h5>
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

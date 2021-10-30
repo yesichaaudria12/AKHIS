@@ -31,8 +31,8 @@ class Chat extends CI_Controller {
                 'id_pasien' => $this->session->userdata('id')
             ];
             $this->db->insert('live_chat', $data);
-            $lc = $this->Model_read->pilih_live_chat($kepada, $dari);
         }
+        $lc = $this->Model_read->pilih_live_chat($kepada, $dari);
         $data = [
             'id_LC' => $lc['id_LC'],
             'dari' => $dari,
@@ -94,21 +94,5 @@ class Chat extends CI_Controller {
             $output .= '<span class="alert-count">'.$data.'</span>';
             echo $output;
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    public function test(){
-        $data = $this->Model_read->belum_dibaca();
-        var_dump($data);
     }
 }

@@ -94,6 +94,9 @@
 							obat belum di pilih
 						<?php endif ?>
 					</div>
+					<div class="card-footer">
+						<a href="<?= base_url('dokter/chat/index/'.$id_pasien); ?>" class="btn btn-primary">Selesai</a>
+					</div>
 				</div>
 			</div>
 		</div>

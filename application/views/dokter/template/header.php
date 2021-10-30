@@ -41,8 +41,7 @@
 					<li><a class="dropdown-item" href="<?= base_url('profile/lihat'); ?>"><i
 								class="bx bx-user"></i><span>Profile</span></a>
 					</li>
-					<li><a class="dropdown-item" href="<?= base_url($this->session->userdata('role').'/home'); ?>"><i
-								class="bx bx-user"></i><span>Dashboard</span></a>
+					<li><a class="dropdown-item" href="<?= base_url($this->session->userdata('role').'/home'); ?>"><i class="fas fa-tachometer-alt me-1"></i><span> Dashboard</span></a>
 					</li>
 					<li>
 						<div class="dropdown-divider mb-0"></div>

@@ -78,6 +78,7 @@
 								</div>
 							</div>
 							<div class="col text-end">
+								<a href="<?= base_url('dokter/tambah/resep/'.$id_tujuan); ?>" class="btn btn-sm btn-info">Lihat Resep</a>
 								<a href="<?= base_url('dokter/tambah/resep/'.$id_tujuan); ?>" class="btn btn-sm btn-primary">Buat Resep</a>
 							</div>
 						</div>

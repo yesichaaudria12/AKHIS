@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Okt 2021 pada 11.32
+-- Waktu pembuatan: 31 Okt 2021 pada 14.08
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -43,19 +43,6 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id_admin`, `nama_lengkap`, `no_hp`, `email`, `password`, `foto`, `status_online`) VALUES
 (11021001, 'Admin Akhis', '6281290345678', 'akhis@gmail.com', '$2y$10$vCrBRT7mStlN6GyRS7XcfudtU7ElFNBHrChDcUXqRX5.l51ypDPBq', 'default-L.png', 'offline');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `akun_bank`
---
-
-CREATE TABLE `akun_bank` (
-  `id_ab` int(11) NOT NULL,
-  `no_rek` int(11) NOT NULL,
-  `A/n` varchar(35) NOT NULL,
-  `nama_bank` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -194,13 +181,6 @@ CREATE TABLE `live_chat` (
   `terakhir_chat` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `live_chat`
---
-
-INSERT INTO `live_chat` (`id_LC`, `id_pasien`, `id_dokter`, `terakhir_chat`) VALUES
-(5, 31020002, 22110001, '2021-10-30 16:12:52');
-
 -- --------------------------------------------------------
 
 --
@@ -294,6 +274,14 @@ CREATE TABLE `resep` (
   `id_pasien` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `resep`
+--
+
+INSERT INTO `resep` (`id_resep`, `nama_resep`, `created_at`, `id_dokter`, `id_pasien`) VALUES
+(19, 'obat demam berdarah', '2021-10-31', 22110001, 32110001),
+(20, 'obat batuk berdahak', '2021-10-31', 22110001, 32110002);
+
 -- --------------------------------------------------------
 
 --
@@ -359,12 +347,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
-
---
--- Indeks untuk tabel `akun_bank`
---
-ALTER TABLE `akun_bank`
-  ADD PRIMARY KEY (`id_ab`);
 
 --
 -- Indeks untuk tabel `artikel`
@@ -459,13 +441,13 @@ ALTER TABLE `resep`
 -- AUTO_INCREMENT untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_resep`
 --
 ALTER TABLE `detail_resep`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `digital_payment`
@@ -483,7 +465,7 @@ ALTER TABLE `jenis_obat`
 -- AUTO_INCREMENT untuk tabel `live_chat`
 --
 ALTER TABLE `live_chat`
-  MODIFY `id_LC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_LC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `obat`
@@ -501,7 +483,7 @@ ALTER TABLE `pembayaran`
 -- AUTO_INCREMENT untuk tabel `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

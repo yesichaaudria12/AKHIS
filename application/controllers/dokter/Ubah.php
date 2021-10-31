@@ -15,7 +15,7 @@ class Ubah extends CI_Controller {
             'required' => 'Aturan minum wajib di isi',
         ]);
         if ($this->form_validation->run() == false){
-            $data['resep'] = $this->Model_read->cariData('resep',['id_resep' => $id_resep]);
+            $data['resep'] = $this->Model_read->cariData('resep',['id_pasien' => $id_pasien]);
             $data['detail_resep'] = $this->db->get_where('v_detail_resep',['id_resep' => $id_resep])->result_array();
             $data['judul_resep'] = $data['resep']['nama_resep'];
             $data['id_pasien'] = $id_pasien;

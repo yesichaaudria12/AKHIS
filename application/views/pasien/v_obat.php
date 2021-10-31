@@ -14,7 +14,8 @@
 					<div class="card-body">
 						<?php foreach(detail_resep($r['id_resep']) as $dr) : ?>
 						<div class="row align-items-center border m-2" data-bs-toggle="modal"
-							data-bs-target="#detail<?= $r['id_resep']; ?><?= $dr['id_obat']; ?>" style="cursor: pointer;">
+							data-bs-target="#detail<?= $r['id_resep']; ?><?= $dr['id_obat']; ?>"
+							style="cursor: pointer;">
 							<div class="col">
 								<img src="<?= base_url('assets'); ?>/img/obat/<?= $dr['gambar']; ?>" alt="gambar obat"
 									width="100">
@@ -64,10 +65,14 @@
 						</div>
 						<?php endforeach ?>
 					</div>
-					<?php if(cek_bayar($r['id_resep']) == 'dikemas'): ?>
-					<button class="btn btn-info">Sedang Diproses</button>
+					<?php if(cek_bayar($r['id_resep']) == 'menunggu konfimasi'): ?>
+					<a href="<?= base_url('pasien/kunjungi/pembayaran/'.$id_pasien."/".$r['id_resep']); ?>"
+						class="btn btn-success">Detail Pembayaran</a>
+					<?php elseif(cek_bayar($r['id_resep']) == 'dikemas'): ?>
+					<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detail<?= $r['id_resep']; ?>">Sedang Diproses</button>
 					<?php elseif(cek_bayar($r['id_resep']) == 'dikirim'): ?>
-					<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#resi<?= $r['id_resep']; ?>">Sedang Dikirim</button>
+					<button class="btn btn-warning" data-bs-toggle="modal"
+						data-bs-target="#resi<?= $r['id_resep']; ?>">Sedang Dikirim</button>
 					<?php elseif(cek_bayar($r['id_resep']) == 'selesai'): ?>
 					<button class="btn btn-success">Sampai</button>
 					<?php else: ?>
@@ -76,6 +81,88 @@
 							class="btn btn-primary px-4">Bayar</a>
 					</div>
 					<?php endif ?>
+				</div>
+			</div>
+			<!-- modal Detail -->
+			<div class="modal fade" id="detail<?=  $r['id_resep']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="card border-top border-0 border-4 border-primary">
+								<div class="card-body p-5 text-center">
+									<div class="card-title d-flex align-items-center justify-content-center">
+										<div><i class="fas fa-exchange-alt me-2 font-22 text-primary"></i>
+										</div>
+										<h5 class="mb-0 text-primary">Detail Pesanan</h5>
+									</div>
+									<hr>
+									<div class="row row-cols-1 row-cols-md-2 justify-content-end">
+										<div class="col">
+											<div class="text-start">
+												<h6>Alamat -> <?= $r['nama_lengkap']; ?></h6>
+												<?= $r['alamat']; ?>
+												<h6>No Handphone : <?= $r['no_hp']; ?></h6>
+											</div>
+											<div class="text-center">
+												<h4>Pesanan</h4>
+											</div>
+											<?php $total = 0;
+                                                            $jumlah_obat = 0;
+                                                            $ongkir = 15000;
+                                                            foreach(detail_resep( $r['id_resep']) as $dr): 
+                                                                $alamat = $dr['alamat']?>
+											<div class="d-flex align-items-center border">
+												<div class="gambar">
+													<img src="<?= base_url('assets'); ?>/img/obat/<?= $dr['gambar']; ?>"
+														alt="gambar obat" width="100">
+												</div>
+												<div class="text-start">
+													<h6><?= $dr['nama_obat']; ?></h6>
+													<p>Jumlah Obat <?= $dr['Qty']; ?></p>
+												</div>
+											</div>
+											<?php $jumlah_obat++;
+                                                            $total += $dr['sub_total'];
+                                                            endforeach; ?>
+										</div>
+										<div class="col">
+											<div class="card">
+												<div class="card-header text-center">
+													<h4>Detail Pembayaran</h4>
+												</div>
+												<div class="card-body">
+													<h5>Ringkasan Biaya</h5>
+													<div class="row row-cols-2">
+														<div class="col">
+															<p>Total harga (<?= $jumlah_obat; ?> Obat)
+															</p>
+															<p>Ongkir</p>
+															<p class="fw-bold">Total tagihan</p>
+														</div>
+														<div class="col-3">
+															<p>Rp
+																<?= number_format($total,0,',','.'); ?>
+															</p>
+															<p>Rp
+																<?= number_format($ongkir,0,',','.'); ?>
+															</p>
+															<p class="fw-bold">Rp
+																<?= number_format($total+ $ongkir,0,',','.'); ?>
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!-- Modal Resi -->

@@ -67,14 +67,14 @@ function ambil_foto_byID($id, $table){
     return $data['foto'];
 }
 
-function chat_terbaru($id_LC = null){
+function chat_terbaru($id_LC = null, $key){
     $ci = get_instance();
     $ci->db->where('id_LC', $id_LC);
     $ci->db->order_by('id','DESC');
     $ci->db->limit(1);
     $data =$ci->db->get('chat')->row_array();
     if($data){
-        return $data;
+        return $data[$key];
     }
 }
 function chat_belum_dibaca($id_LC = null){

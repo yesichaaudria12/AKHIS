@@ -3,7 +3,6 @@
 		overflow-y: scroll;
 	}
 </style>
-
 <div class="page-wrapper">
 	<div class="page-content">
 	<?= $this->session->flashdata('message'); ?>
@@ -32,10 +31,10 @@
 							<div class="chat-list">
 								<?php foreach($chat as $chat): 
 									$id_pasien = $chat['id_pasien'];
-									$pesan = chat_terbaru($chat['id_LC'])['pesan'];
-									$waktu = chat_terbaru($chat['id_LC'])['tanggal_dikirim'];
+									$pesan = chat_terbaru($chat['id_LC'],'pesan');
+									$waktu = chat_terbaru($chat['id_LC'], 'tanggal_dikirim');
 									if ($waktu == date('Y-m-d')){
-										$waktu = str_replace(':','.',substr(chat_terbaru($chat['id_LC'])['jam_dikirim'],0,5));
+										$waktu = str_replace(':','.',substr(chat_terbaru($chat['id_LC'],'jam_dikirim'),0,5));
 									}
 									?>
 								<div class="list-group list-group-flush">
@@ -112,46 +111,48 @@
 	</div>
 </div>
 <script src="<?= base_url('assets'); ?>/akhis/js/jquery.min.js"></script>
-<script>
-	$(document).ready(function () {
-		$('#kirim').click(function () {
-			const nilai = {
+<?php if (isset($id_tujuan)): ?>
+	<script>
+		$(document).ready(function () {
+			$('#kirim').click(function () {
+				const nilai = {
+					dari: $('#dari').val(),
+					kepada: $('#kepada').val(),
+					pesan: $('#pesan').val()
+				};
+				$.ajax({
+					url: "<?= base_url('dokter/chat/kirim'); ?>",
+					type: "POST",
+					data: nilai,
+					dataType: 'JSON',
+					success: $('#pesan').val("")
+				})
+			})
+			$('#chat-content')
+		})
+		setInterval(function () {
+			const value = {
 				dari: $('#dari').val(),
 				kepada: $('#kepada').val(),
-				pesan: $('#pesan').val()
+				pesan: $('#pesan').val(),
 			};
 			$.ajax({
-				url: "<?= base_url('dokter/chat/kirim'); ?>",
+				url: "<?= base_url('dokter/chat/live_chat'); ?>",
 				type: "POST",
-				data: nilai,
-				dataType: 'JSON',
-				success: $('#pesan').val("")
+				data: value,
+				success: function (result) {
+					$('#chat-content').html(result);
+					$('#chat-content')
+					.mouseenter(function(){
+						$(this).addClass('active');
+					})
+					.mouseleave(function(){
+						$(this).removeClass('active');
+						$('#chat-content').scrollTop($("#chat-content").prop("scrollHeight"))
+					})
+				}
 			})
-		})
-		$('#chat-content')
-	})
-	setInterval(function () {
-		const value = {
-			dari: $('#dari').val(),
-			kepada: $('#kepada').val(),
-			pesan: $('#pesan').val(),
-		};
-		$.ajax({
-			url: "<?= base_url('dokter/chat/live_chat'); ?>",
-			type: "POST",
-			data: value,
-			success: function (result) {
-				$('#chat-content').html(result);
-				$('#chat-content')
-				.mouseenter(function(){
-					$(this).addClass('active');
-				})
-				.mouseleave(function(){
-					$(this).removeClass('active');
-					$('#chat-content').scrollTop($("#chat-content").prop("scrollHeight"))
-				})
-			}
-		})
-	}, 500)
+		}, 500)
 
-</script>
+	</script>
+<?php endif ?>

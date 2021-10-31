@@ -7,18 +7,10 @@ class Chat extends CI_Controller {
 		parent::__construct();
         cek_status_login();
     }
-    public function index($id = null){
-        if ($id){
-            $data['id_tujuan'] = $id; 
-            $this->Model_update->baca_pesan($id);
-            $lc = $this->Model_read->pilih_live_chat($this->session->userdata('id'), $id);
-            if (!$lc){
-                $data = [
-                    'id_dokter' => $id,
-                    'id_pasien' => $this->session->userdata('id')
-                ];
-                $this->db->insert('live_chat', $data);
-            }
+    public function index($id_dokter = null){
+        if ($id_dokter){
+            $data['id_tujuan'] = $id_dokter; 
+            $this->Model_update->baca_pesan($id_dokter);
         }
 		$data['chat'] = $this->Model_read->live_chat_pasien();
         $data['title'] = "Chat Dokter | ". nama_web();
@@ -29,32 +21,42 @@ class Chat extends CI_Controller {
 		$this->load->view('pasien/template/footer');
     }
     public function kirim(){
-        $dari = $this->input->post('dari');
-        $kepada = $this->input->post('kepada');
-        $pesan = $this->input->post('pesan');
-        $lc = $this->Model_read->pilih_live_chat($kepada, $dari);
-        $data = [
-            'id_LC' => $lc['id_LC'],
-            'dari' => $dari,
-            'kepada' => $kepada,
-            'pesan' => $pesan,
-            'tanggal_dikirim' => date('Y-m-d'),
-            'jam_dikirim' => date('H:i:s'),
-            'status' => 'terkirim'
-        ];
-        $this->db->insert('chat', $data);
-        $result = $this->db->affected_rows();
-        if ($result > 0){
-            $this->db->set('terakhir_chat', date('Y-m-d H:i:s'));
-            $this->db->where('id_LC', $lc['id_LC']);
-            $this->db->update('live_chat');
+        $id_pasien = $this->input->post('dari'); //ID pengirim
+        $id_dokter = $this->input->post('kepada'); // ID Penerima
+        $pesan = $this->input->post('pesan'); // Pesan
+        if($id_pasien && $id_dokter && $pesan){
+            $lc = $this->Model_read->pilih_live_chat($id_pasien, $id_dokter);
+            if (!$lc){
+                $data = [
+                    'id_dokter' => $id_dokter,
+                    'id_pasien' => $id_pasien
+                ];
+                $this->db->insert('live_chat', $data);
+                $lc = $this->Model_read->pilih_live_chat($id_pasien, $id_dokter); // Ambil ID live Chat
+            }
+            $data = [
+                'id_LC' => $lc['id_LC'],
+                'dari' => $id_pasien,
+                'kepada' => $id_dokter,
+                'pesan' => $pesan,
+                'tanggal_dikirim' => date('Y-m-d'),
+                'jam_dikirim' => date('H:i:s'),
+                'status' => 'terkirim'
+            ];
+            $this->db->insert('chat', $data); // Masukan semua data chat
+            $result = $this->db->affected_rows();
+            if ($result > 0){
+                $this->db->set('terakhir_chat', date('Y-m-d H:i:s'));
+                $this->db->where('id_LC', $lc['id_LC']);
+                $this->db->update('live_chat');
+            }
         }
     }
     public function live_chat(){
         $output = '';
-        $dari = $this->input->post('dari');
-        $kepada = $this->input->post('kepada');
-        $data = $this->db->query("SELECT * FROM `chat` WHERE dari = $dari AND kepada = $kepada OR dari = $kepada AND kepada = $dari")->result_array();
+        $id_pasien = $this->input->post('dari');
+        $id_dokter = $this->input->post('kepada');
+        $data = $this->db->query("SELECT * FROM `chat` WHERE dari = $id_pasien AND kepada = $id_dokter OR dari = $id_dokter AND kepada = $id_pasien")->result_array();
         foreach($data as $data){
             $pesan = $data['pesan'];
             $waktu = $data['tanggal_dikirim'];

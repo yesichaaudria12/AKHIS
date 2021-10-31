@@ -54,7 +54,8 @@
 			</ul>
 		</div>
 		<?php else: ?>
-		<a href="<?= base_url('auth/login'); ?>" class="btn btn-primary">Login</a>
+			<a href="<?= base_url('auth/login'); ?>" class="btn btn-outline-success me-1">Login</a>
+			<a href="<?= base_url('auth/daftar'); ?>" class="btn btn-success">Daftar</a>
 		<?php endif; ?>
 		</li>
 		</ul>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 31 Okt 2021 pada 14.08
+-- Waktu pembuatan: 31 Okt 2021 pada 14.17
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -273,14 +273,6 @@ CREATE TABLE `resep` (
   `id_dokter` int(11) NOT NULL,
   `id_pasien` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `resep`
---
-
-INSERT INTO `resep` (`id_resep`, `nama_resep`, `created_at`, `id_dokter`, `id_pasien`) VALUES
-(19, 'obat demam berdarah', '2021-10-31', 22110001, 32110001),
-(20, 'obat batuk berdahak', '2021-10-31', 22110001, 32110002);
 
 -- --------------------------------------------------------
 

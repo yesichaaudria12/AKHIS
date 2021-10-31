@@ -63,28 +63,8 @@
 								</div>
 							</div>
 						</div>
-						<?php endforeach ?>
-					</div>
-					<?php if(cek_bayar($r['id_resep']) == 'menunggu konfimasi'): ?>
-					<a href="<?= base_url('pasien/kunjungi/pembayaran/'.$id_pasien."/".$r['id_resep']); ?>"
-						class="btn btn-success">Detail Pembayaran</a>
-					<?php elseif(cek_bayar($r['id_resep']) == 'dikemas'): ?>
-					<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detail<?= $r['id_resep']; ?>">Sedang Diproses</button>
-					<?php elseif(cek_bayar($r['id_resep']) == 'dikirim'): ?>
-					<button class="btn btn-warning" data-bs-toggle="modal"
-						data-bs-target="#resi<?= $r['id_resep']; ?>">Sedang Dikirim</button>
-					<?php elseif(cek_bayar($r['id_resep']) == 'selesai'): ?>
-					<button class="btn btn-success">Sampai</button>
-					<?php else: ?>
-					<div class="card-footer text-center">
-						<a href="<?= base_url('pasien/kunjungi/pembayaran/'.$id_pasien."/".$r['id_resep']); ?>"
-							class="btn btn-primary px-4">Bayar</a>
-					</div>
-					<?php endif ?>
-				</div>
-			</div>
-			<!-- modal Detail -->
-			<div class="modal fade" id="detail<?=  $r['id_resep']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+						<!-- modal detail  -->
+						<div class="modal fade" id="detail<?=  $dr['id_resep']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog modal-fullscreen">
 					<div class="modal-content">
@@ -100,9 +80,9 @@
 									<div class="row row-cols-1 row-cols-md-2 justify-content-end">
 										<div class="col">
 											<div class="text-start">
-												<h6>Alamat -> <?= $r['nama_lengkap']; ?></h6>
-												<?= $r['alamat']; ?>
-												<h6>No Handphone : <?= $r['no_hp']; ?></h6>
+												<h6>Alamat -> <?= $dr['nama_lengkap']; ?></h6>
+												<?= $dr['alamat']; ?>
+												<h6>No Handphone : <?= $dr['no_hp']; ?></h6>
 											</div>
 											<div class="text-center">
 												<h4>Pesanan</h4>
@@ -110,7 +90,7 @@
 											<?php $total = 0;
                                                             $jumlah_obat = 0;
                                                             $ongkir = 15000;
-                                                            foreach(detail_resep( $r['id_resep']) as $dr): 
+                                                            foreach(detail_resep( $dr['id_resep']) as $dr): 
                                                                 $alamat = $dr['alamat']?>
 											<div class="d-flex align-items-center border">
 												<div class="gambar">
@@ -165,6 +145,28 @@
 					</div>
 				</div>
 			</div>
+						<?php endforeach ?>
+					</div>
+					<?php if(cek_bayar($r['id_resep']) == 'menunggu konfimasi'): ?>
+					<a href="<?= base_url('pasien/kunjungi/pembayaran/'.$id_pasien."/".$r['id_resep']); ?>"
+						class="btn btn-success">Detail Pembayaran</a>
+					<?php elseif(cek_bayar($r['id_resep']) == 'dikemas'): ?>
+					<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detail<?= $r['id_resep']; ?>">Sedang Diproses</button>
+					<?php elseif(cek_bayar($r['id_resep']) == 'dikirim'): ?>
+					<button class="btn btn-warning" data-bs-toggle="modal"
+						data-bs-target="#resi<?= $r['id_resep']; ?>">Sedang Dikirim</button>
+					<?php elseif(cek_bayar($r['id_resep']) == 'selesai'): ?>
+					<button class="btn btn-success">Sampai</button>
+					<?php else: ?>
+					<div class="card-footer text-center">
+						<a href="<?= base_url('pasien/kunjungi/pembayaran/'.$id_pasien."/".$r['id_resep']); ?>"
+							class="btn btn-primary px-4">Bayar</a>
+					</div>
+					<?php endif ?>
+				</div>
+			</div>
+			<!-- modal Detail -->
+			
 			<!-- Modal Resi -->
 			<div class="modal fade" id="resi<?= $r['id_resep']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
 				aria-hidden="true">

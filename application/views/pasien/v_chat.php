@@ -67,13 +67,21 @@
 						<div class="chat-toggle-btn"><i class="bx bx-menu-alt-left"></i></div>
 						<img src="<?= base_url('assets'); ?>/img/dokter/<?= ambil_foto_byID($id_tujuan,'dokter'); ?>"
 							width="48" height="48" class="rounded-circle" alt="" />
-						<div class="ms-1">
-							<h4 class="mb-1 font-weight-bold"><?= ambil_nama_byID($id_tujuan, 'dokter'); ?></h4>
-							<div class="list-inline d-sm-flex mb-0 d-none">
-								<a href="javascript:;" class="list-inline-item d-flex align-items-center text-secondary">
-									<?= status_online($id_tujuan, 'dokter') == 'online' ? '<small class="bx bxs-circle me-1 chart-online"></small>Online' : ""; ?>
-								</a>
+						<div class="ms-1 container">
+						<div class="row row-cols-2 justify-content-between">
+							<div class="col">
+								<h4 class="mb-1 font-weight-bold"><?= ambil_nama_byID($id_tujuan, 'dokter'); ?></h4>
+								<div class="list-inline d-sm-flex mb-0 d-none">
+									<a href="javascript:;"
+										class="list-inline-item d-flex align-items-center text-secondary">
+										<?= status_online($id_tujuan, 'dokter') == 'online' ? '<small class="bx bxs-circle me-1 chart-online"></small>Online' : ""; ?>
+									</a>
+								</div>
 							</div>
+							<div class="col text-end">
+								<a href="<?= base_url('pasien/lihat/obat/'. $this->session->userdata('id')); ?>" class="btn btn-sm btn-success">Resep Anda</a>
+							</div>
+						</div>
 						</div>
 					</div>
 					<div class="chat-content" id="chat-content">

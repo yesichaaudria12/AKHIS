@@ -14,7 +14,7 @@ class Lihat extends CI_Controller {
         $this->db->where('penerima', $id_dokter);
         $this->db->where('pengirim', $id);
 		$data['chat'] = $this->Model_read->ambilData('chat');
-        $data['title'] = "Dashboard | Admin";
+        $data['title'] = "Resep Pasien | Dokter";
 		$this->load->view('dokter/template/head', $data);
 		$this->load->view('dokter/template/header');
         $this->load->view('dokter/template/sidebar');
@@ -24,7 +24,7 @@ class Lihat extends CI_Controller {
     public function obat()
 	{
 		$data['obat'] = $this->Model_read->ambilData('obat');
-        $data['title'] = "Daftar Obat | Admin";
+        $data['title'] = "Daftar Obat | Dokter";
 		$this->load->view('dokter/template/head', $data);
 		$this->load->view('dokter/template/header');
         $this->load->view('dokter/template/sidebar');
@@ -33,7 +33,7 @@ class Lihat extends CI_Controller {
 	}
 	public function pasien(){
 		$data['pasien'] = $this->Model_read->ambilData('pasien');
-		$data['title'] = "Daftar Obat | Admin";
+		$data['title'] = "Data Singkat Pasien | Dokter";
 		$this->load->view('dokter/template/head', $data);
 		$this->load->view('dokter/template/header');
         $this->load->view('dokter/template/sidebar');

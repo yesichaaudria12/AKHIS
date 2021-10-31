@@ -12,7 +12,7 @@ class Kunjungi extends CI_Controller {
     public function konsultasi(){
         $data['kembali'] = $this->session->userdata('kembali');
         $data['dokter'] = $this->Model_read->ambilData('dokter');
-        $data['title'] = "Dashboard | Admin";
+        $data['title'] = "Konsultasi | Pasien";
         $this->load->view('template/head', $data);
         $this->load->view('template/header');
         $this->load->view('template/sidebar');
@@ -39,7 +39,7 @@ class Kunjungi extends CI_Controller {
             $data['id_pasien'] = $id_pasien;
             $data['detail_resep'] = $this->db->get_where('v_detail_resep',['id_resep' => $id_resep])->result_array();
             $data['dokter'] = $this->Model_read->ambilData('dokter');
-            $data['title'] = "Dashboard | Admin";
+            $data['title'] = "Pembayaran | Pasien";
             $this->load->view('template/head', $data);
             $this->load->view('template/header');
             $this->load->view('template/sidebar');

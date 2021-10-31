@@ -23,7 +23,7 @@ class Ubah extends CI_Controller {
             $data['list'] = 'jenis';
             $data['obat'] = $this->Model_read->cariData('obat', ['id_obat' => $id]);
             $data['kembali'] = $this->session->userdata('kembali');
-            $data['title'] = "Tambah Obat AKHIS";
+            $data['title'] = "Ubah Obat AKHIS";
             $this->load->view('admin/template/head', $data);
             $this->load->view('admin/template/header');
             $this->load->view('admin/template/sidebar');

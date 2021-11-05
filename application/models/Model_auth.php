@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+ini_set('date.timezone', 'Asia/Jakarta');
 
 class Model_auth extends CI_Model
 {
@@ -8,7 +9,7 @@ class Model_auth extends CI_Model
         $email = $this->input->post('email');
         $password = $this->input->post('password');
 
-        $admin = $this->db->get_where('admin',['email' => $email])->row_array();
+        $admin = $this->db->get_where('admin', ['email' => $email])->row_array();
         $dokter = $this->db->get_where('dokter', ['email' => $email])->row_array();
         $pasien = $this->db->get_where('pasien', ['email' => $email])->row_array();
         if ($admin) {
@@ -33,7 +34,7 @@ class Model_auth extends CI_Model
             </div>');
                 redirect('auth/login');
             }
-        }elseif ($dokter) {
+        } elseif ($dokter) {
             if (password_verify($password, $dokter['password'])) {
                 online($dokter['id_dokter'], 'dokter');
                 $this->session->set_userdata([
@@ -55,7 +56,7 @@ class Model_auth extends CI_Model
             </div>');
                 redirect('auth/login');
             }
-        }elseif ($pasien) {
+        } elseif ($pasien) {
             if (password_verify($password, $pasien['password'])) {
                 online($pasien['id_pasien'], 'pasien');
                 $this->session->set_userdata([
@@ -85,13 +86,14 @@ class Model_auth extends CI_Model
             redirect('auth/login');
         }
     }
-    public function daftar(){
+    public function daftar()
+    {
         $data = [
             'id_pasien' => generate_idUser('pasien', 'id_pasien'),
             'nama_lengkap' => $this->input->post('nama_lengkap'),
             'email' => $this->input->post('email'),
-            'foto' => "default-". $this->input->post('jenis_kelamin').'.png',
-            'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
+            'foto' => "default-" . $this->input->post('jenis_kelamin') . '.png',
+            'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
         ];
         $this->db->insert('pasien', $data);
         $result = $this->db->affected_rows();

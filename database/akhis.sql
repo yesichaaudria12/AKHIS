@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 31 Okt 2021 pada 14.17
+-- Waktu pembuatan: 31 Okt 2021 pada 14.55
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -294,6 +294,7 @@ CREATE TABLE `v_detail_resep` (
 ,`dibuat_untuk` int(11)
 ,`nama_lengkap` varchar(35)
 ,`alamat` text
+,`no_hp` varchar(13)
 );
 
 -- --------------------------------------------------------
@@ -319,7 +320,7 @@ CREATE TABLE `v_pesanan` (
 --
 DROP TABLE IF EXISTS `v_detail_resep`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_detail_resep`  AS SELECT `dr`.`id` AS `id`, `dr`.`id_resep` AS `id_resep`, `r`.`nama_resep` AS `nama_resep`, `dr`.`id_obat` AS `id_obat`, `o`.`nama_obat` AS `nama_obat`, `dr`.`Qty` AS `Qty`, `dr`.`aturan_minum` AS `aturan_minum`, `o`.`gambar` AS `gambar`, `o`.`harga`* `dr`.`Qty` AS `sub_total`, `r`.`id_dokter` AS `dibuat_oleh`, `r`.`id_pasien` AS `dibuat_untuk`, `p`.`nama_lengkap` AS `nama_lengkap`, `p`.`alamat` AS `alamat` FROM (((`detail_resep` `dr` join `resep` `r` on(`dr`.`id_resep` = `r`.`id_resep`)) join `obat` `o` on(`dr`.`id_obat` = `o`.`id_obat`)) join `pasien` `p` on(`r`.`id_pasien` = `p`.`id_pasien`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_detail_resep`  AS SELECT `dr`.`id` AS `id`, `dr`.`id_resep` AS `id_resep`, `r`.`nama_resep` AS `nama_resep`, `dr`.`id_obat` AS `id_obat`, `o`.`nama_obat` AS `nama_obat`, `dr`.`Qty` AS `Qty`, `dr`.`aturan_minum` AS `aturan_minum`, `o`.`gambar` AS `gambar`, `o`.`harga`* `dr`.`Qty` AS `sub_total`, `r`.`id_dokter` AS `dibuat_oleh`, `r`.`id_pasien` AS `dibuat_untuk`, `p`.`nama_lengkap` AS `nama_lengkap`, `p`.`alamat` AS `alamat`, `p`.`no_hp` AS `no_hp` FROM (((`detail_resep` `dr` join `resep` `r` on(`dr`.`id_resep` = `r`.`id_resep`)) join `obat` `o` on(`dr`.`id_obat` = `o`.`id_obat`)) join `pasien` `p` on(`r`.`id_pasien` = `p`.`id_pasien`)) ;
 
 -- --------------------------------------------------------
 
@@ -433,13 +434,13 @@ ALTER TABLE `resep`
 -- AUTO_INCREMENT untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_resep`
 --
 ALTER TABLE `detail_resep`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `digital_payment`
@@ -457,7 +458,7 @@ ALTER TABLE `jenis_obat`
 -- AUTO_INCREMENT untuk tabel `live_chat`
 --
 ALTER TABLE `live_chat`
-  MODIFY `id_LC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_LC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `obat`
@@ -469,13 +470,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

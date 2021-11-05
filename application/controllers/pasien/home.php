@@ -9,7 +9,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$data['obat'] = $this->Model_read->ambilData('obat');
-        $data['title'] = "Dashboard | Admin";
+        $data['title'] = "Dashboard | Pasien";
 		$this->load->view('pasien/template/head', $data);
 		$this->load->view('pasien/template/header');
 		$this->load->view('pasien/template/sidebar');

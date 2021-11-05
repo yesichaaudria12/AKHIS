@@ -9,7 +9,7 @@ class Lihat extends CI_Controller {
     }
     public function resep($id = null)
 	{
-        $data['title'] = "Dashboard | Admin";
+        $data['title'] = "Resep Anda | Pasien";
 		$this->load->view('pasien/template/head', $data);
 		$this->load->view('pasien/template/header');
         $this->load->view('pasien/template/sidebar');

@@ -1,6 +1,6 @@
 <div class="page-wrapper">
 	<div class="page-content">
-	<?= $this->session->flashdata('message'); ?>
+		<?= $this->session->flashdata('message'); ?>
 		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 			<div class="col">
 				<div class="card radius-10 bg-warning bg-gradient">
@@ -62,33 +62,20 @@
 						<div class="table-responsive mt-4">
 							<table class="table align-middle mb-0 table-hover" id="Transaction-History">
 								<thead class="table-light">
-									<tr>
-										<th>Payment Name</th>
-										<th>Date & Time</th>
-										<th>Amount</th>
-										<th>Status</th>
+									<tr class="text-center">
+										<th>Nama Pasien</th>
+										<th>Nama Resep</th>
+										<th>Tanggal Dibuat</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>
-											<div class="d-flex align-items-center">
-												<div class="">
-													<img src="<?= base_url('assets'); ?>/akhis/images/avatars/avatar-1.png"
-														class="rounded-circle" width="46" height="46" alt="" />
-												</div>
-												<div class="ms-2">
-													<h6 class="mb-1 font-14">Payment from Michle Jhon</h6>
-													<p class="mb-0 font-13 text-secondary">Refrence Id #8547846</p>
-												</div>
-											</div>
-										</td>
-										<td>Jan 10, 2021</td>
-										<td>+256.00</td>
-										<td>
-											<div class="badge rounded-pill bg-success w-100">Completed</div>
-										</td>
-									</tr>
+									<?php foreach ($pasien as $pasien) : ?>
+										<tr>
+											<td><?= $pasien['nama_lengkap']; ?></td>
+											<td><?= $pasien['nama_resep']; ?></td>
+											<td><?= $pasien['created_at']; ?></td>
+										</tr>
+									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
